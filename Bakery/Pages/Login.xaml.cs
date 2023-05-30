@@ -29,7 +29,7 @@ namespace bakery
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            if (Password.Password == "12325805")
+            if (Password.Password == "12" && LoginField.Text == "da")
             {
                 mainWindow.OpenPage(MainWindow.pages.Menu);
             }

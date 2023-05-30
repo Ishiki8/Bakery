@@ -5,7 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:bakery"
       mc:Ignorable="d" 
-      Height="450" Width="400"
+      Height="auto" Width="auto"
+      MaxHeight="450" MaxWidth="400"
+      d:DesignHeight="450" d:DesignWidth="400"
       Title="Login">
 
     <Grid>
@@ -18,7 +20,7 @@
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">Авторизация</TextBlock>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="10">
-            <Label Content="Логин:" Target="{Binding ElementName=Login}"></Label>
+            <Label Content="Логин:" Target="{Binding ElementName=LoginField}"></Label>
             <TextBox x:Name="LoginField"></TextBox>
 
             <Label Content="Пароль:" Target="{Binding ElementName=Password}"></Label>
