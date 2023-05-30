@@ -1,0 +1,29 @@
+﻿<Page x:Class="bakery.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bakery"
+      mc:Ignorable="d" 
+      Height="450" Width="400"
+      Title="Login">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">Авторизация</TextBlock>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="10">
+            <Label Content="Логин:" Target="{Binding ElementName=Login}"></Label>
+            <TextBox x:Name="LoginField"></TextBox>
+
+            <Label Content="Пароль:" Target="{Binding ElementName=Password}"></Label>
+            <PasswordBox x:Name="Password"></PasswordBox>
+        </StackPanel>
+        <Button Grid.Row="2" MaxWidth="100" MaxHeight="50" MinWidth="75" MinHeight="40" Click="Login_Click">Войти</Button>
+    </Grid>
+</Page>
