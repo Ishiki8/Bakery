@@ -43,5 +43,7 @@ namespace bakery
                 MainFrame.Navigate(new Menu(this));
             }  
         }
+
+
     }
 }
