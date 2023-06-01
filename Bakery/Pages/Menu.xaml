@@ -15,16 +15,24 @@
             <TabItem Header="Пользователи">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="0.1*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
-                    <DataGrid Grid.Column="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="usersDataGrid" IsReadOnly="True">
+                    
+                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Пользователи</TextBlock>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15">
+                        <TextBlock Text="Поиск по ФИО"></TextBlock>
+                        <TextBox x:Name="searchUserByFullNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchUserByFullName_KeyUp"></TextBox>
+                    </StackPanel>
+                    
+                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="usersDataGrid" IsReadOnly="True" Margin="0 50 10 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"/>
@@ -46,7 +54,7 @@
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button
                             MinWidth="50"
                             MaxWidth="200"
@@ -54,7 +62,7 @@
                             MaxHeight="80"
                             Margin="5"
                             FontSize="14"
-                            Click="AddUserButton_Click">Добавить запись</Button>
+                            Click="AddUserButton_Click">Добавить пользователя</Button>
                         <Button
                             MinWidth="50"
                             MaxWidth="200"
@@ -62,24 +70,19 @@
                             MaxHeight="80"
                             Margin="5"
                             FontSize="14"
-                            Click="RemoveUserButton_Click">Удалить запись</Button>
+                            Click="EditUserButton_Click">Изменить пользователя</Button>
+                        <Button
+                            MinWidth="50"
+                            MaxWidth="200"
+                            MinHeight="30"
+                            MaxHeight="80"
+                            Margin="5"
+                            FontSize="14"
+                            Click="RemoveUserButton_Click">Удалить пользователя</Button>
                     </StackPanel>
-                </Grid>
-            </TabItem>
-            
-            <TabItem Header="Роли пользователей">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="0.1*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
 
-                    <DataGrid Grid.Column="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="rolesDataGrid" IsReadOnly="True">
+                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Роли</TextBlock>
+                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="rolesDataGrid" IsReadOnly="True" Margin="10 50 0 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"/>
@@ -89,13 +92,13 @@
 
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Редактировать"></MenuItem>
-                                <MenuItem Header="Удалить"></MenuItem>
+                                <MenuItem Header="Редактировать" Click="EditRoleButton_Click"></MenuItem>
+                                <MenuItem Header="Удалить" Click="RemoveRoleButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button
                             MinWidth="50"
                             MaxWidth="200"
@@ -103,7 +106,7 @@
                             MaxHeight="80"
                             Margin="5"
                             FontSize="14"
-                            Click="AddRoleButton_Click">Добавить запись</Button>
+                            Click="AddRoleButton_Click">Добавить роль</Button>
                         <Button
                             MinWidth="50"
                             MaxWidth="200"
@@ -111,7 +114,15 @@
                             MaxHeight="80"
                             Margin="5"
                             FontSize="14"
-                            Click="RemoveRoleButton_Click">Удалить запись</Button>
+                            Click="EditRoleButton_Click">Изменить роль</Button>
+                        <Button
+                            MinWidth="50"
+                            MaxWidth="200"
+                            MinHeight="30"
+                            MaxHeight="80"
+                            Margin="5"
+                            FontSize="14"
+                            Click="RemoveRoleButton_Click">Удалить роль</Button>
                     </StackPanel>
                 </Grid>
             </TabItem>

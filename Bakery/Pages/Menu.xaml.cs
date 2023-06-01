@@ -46,12 +46,16 @@ namespace bakery
 
         private void AddRoleButton_Click(object sender, RoutedEventArgs e)
         {
+            AddRole window = new AddRole();
+            window.Owner = mainWindow;
+            window.ShowDialog();
 
-
+            RefreshRolesTable();
         }
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
         {
             User user = usersDataGrid.SelectedItem as User;
+            
             if (user != null)
             {
                 EditUser window = new EditUser(user);
@@ -66,27 +70,72 @@ namespace bakery
                 MessageBox.Show("Выберите запись для редактирования");
             }
         }
+        private void EditRoleButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Role role = rolesDataGrid.SelectedItem as Role;
+            
+            if (role != null)
+            {
+                EditRole window = new EditRole(role);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshRolesTable();
+                RefreshUsersTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+            }
+        }
 
         private void RemoveUserButton_Click(object sender, RoutedEventArgs e)
         {
             User user = usersDataGrid.SelectedItem as User;
-            DatabaseControl.RemoveUser(user);
             
-            RefreshUsersTable();
-            RefreshRolesTable();
+            if (user != null)
+            {
+                DatabaseControl.RemoveUser(user);
+
+                RefreshUsersTable();
+                RefreshRolesTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+            
         }
         private void RemoveRoleButton_Click(object sender, RoutedEventArgs e)
         {
             Role role = rolesDataGrid.SelectedItem as Role;
-            DatabaseControl.RemoveRole(role);
 
-            RefreshRolesTable();
+            if (role != null)
+            {
+                DatabaseControl.RemoveRole(role);
+
+                RefreshRolesTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+            
         }
 
         public void RefreshUsersTable()
         {
             usersDataGrid.ItemsSource = null;
-            usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
+
+            if (searchUserByFullNameView.Text != null)
+            {
+                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForViewByFullName(searchUserByFullNameView.Text);
+            }
+            else
+            {
+                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
+            }
+            
         }
         public void RefreshRolesTable()
         {
@@ -94,5 +143,10 @@ namespace bakery
             rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
         }
 
+        private void SearchUserByFullName_KeyUp(object sender, KeyEventArgs e)
+        {
+            usersDataGrid.ItemsSource = null;
+            usersDataGrid.ItemsSource = DatabaseControl.GetUsersForViewByFullName(searchUserByFullNameView.Text);
+        }
     }
 }

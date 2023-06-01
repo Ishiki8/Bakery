@@ -36,8 +36,6 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            
-            
         </StackPanel>
         <DockPanel Grid.Row="1">
             <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>

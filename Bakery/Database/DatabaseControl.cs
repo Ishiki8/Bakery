@@ -19,6 +19,13 @@ namespace bakery.Database
                 return ctx.User.Include(p => p.RoleEntity).ToList();
             }
         }
+        public static List<User> GetUsersForViewByFullName(string name)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.User.Include(p => p.RoleEntity).Where(p => EF.Functions.Like(p.FullName.ToLower(), $"%{name.ToLower()}%")).ToList();
+            }
+        }
         public static void AddUser(User user)
         {
             using (DbAppContext ctx = new DbAppContext())
@@ -110,5 +117,6 @@ namespace bakery.Database
                 
             }
         }
+
     }
 }

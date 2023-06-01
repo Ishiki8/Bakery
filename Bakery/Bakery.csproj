@@ -144,8 +144,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Objects\Customer.cs" />
+    <Compile Include="Windows\AddRole.xaml.cs">
+      <DependentUpon>AddRole.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddUser.xaml.cs">
       <DependentUpon>AddUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditRole.xaml.cs">
+      <DependentUpon>EditRole.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditUser.xaml.cs">
       <DependentUpon>EditUser.xaml</DependentUpon>
@@ -177,7 +184,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AddRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AddUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
