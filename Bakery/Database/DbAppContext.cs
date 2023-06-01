@@ -17,7 +17,7 @@ namespace bakery.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(
-                "Host=localhost;Username=postgres;Password=2a8s01s3A9S12S;Database=Bakery_Database");
+                "Host=localhost;Username=postgres;Password=root;Database=Bakery_Database");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
