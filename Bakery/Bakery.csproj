@@ -145,11 +145,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Objects\Customer.cs" />
+    <Compile Include="Objects\Order.cs" />
+    <Compile Include="Windows\AddCustomer.xaml.cs">
+      <DependentUpon>AddCustomer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddRole.xaml.cs">
       <DependentUpon>AddRole.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\AddUser.xaml.cs">
       <DependentUpon>AddUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditCustomer.xaml.cs">
+      <DependentUpon>EditCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditRole.xaml.cs">
       <DependentUpon>EditRole.xaml</DependentUpon>
@@ -184,11 +191,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AddCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AddRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

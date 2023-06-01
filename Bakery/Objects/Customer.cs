@@ -10,7 +10,9 @@ namespace bakery.Objects
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double ITN { get; set; }
-
+        public string Address { get; set; }
+        public string ITN { get; set; }
+        public string PhoneNumber { get; set; }
+        public List<Order> OrderEntities { get; set; }
     }
 }

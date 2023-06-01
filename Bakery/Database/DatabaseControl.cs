@@ -117,6 +117,111 @@ namespace bakery.Database
                 
             }
         }
+        public static List<Order> GetOrdersForView()
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Order.Include(p => p.CustomerEntity).ToList();
+            }
+        }
+        public static List<Customer> GetCustomersForViewByName(string name)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Customer.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{name.ToLower()}%")).ToList();
+            }
+        }
+        public static void AddOrder(Order order)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                ctx.Order.Add(order);
+                ctx.SaveChanges();
+            }
+        }
+        public static void UpdateOrder(Order order)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                Order _order = ctx.Order.FirstOrDefault(p => p.Id == order.Id);
+
+                if (_order == null)
+                {
+                    return;
+                }
+
+                _order.Date = order.Date;
+                _order.Status = order.Status;
+                _order.CustomerId = order.CustomerId;
+
+                ctx.SaveChanges();
+            }
+        }
+        public static void RemoveOrder(Order order)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (order == null)
+                {
+                    return;
+                }
+                ctx.Order.Remove(order);
+                ctx.SaveChanges();
+            }
+        }
+        public static List<Customer> GetCustomersForView()
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Customer.Include(p => p.OrderEntities).ToList();
+            }
+        }
+        public static void AddCustomer(Customer customer)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                ctx.Customer.Add(customer);
+                ctx.SaveChanges();
+            }
+        }
+        public static void UpdateCustomer(Customer customer)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                Customer _customer = ctx.Customer.FirstOrDefault(p => p.Id == customer.Id);
+
+                if (_customer == null)
+                {
+                    return;
+                }
+
+                _customer.Name = customer.Name;
+                _customer.Address = customer.Address;
+                _customer.ITN = customer.ITN;
+                _customer.PhoneNumber = customer.PhoneNumber;
+
+                ctx.SaveChanges();
+            }
+        }
+        public static void RemoveCustomer(Customer customer)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (customer == null)
+                {
+                    return;
+                }
+
+                if (customer.OrderEntities.Count > 0)
+                {
+                    MessageBox.Show("Невозможно удалить заказчика, поскольку содержатся одна или несколько записей о его заказах!");
+                    return;
+                }
+
+                ctx.Customer.Remove(customer);
+                ctx.SaveChanges();
+            }
+        }
 
     }
 }

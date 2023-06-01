@@ -12,6 +12,8 @@ namespace bakery.Database
     {
         public DbSet<User> User { get; set; }
         public DbSet<Role> Role { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<Customer> Customer { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,6 +25,8 @@ namespace bakery.Database
         {
             modelBuilder.Entity<User>().HasOne(p => p.RoleEntity)
                                        .WithMany(p => p.UserEntities);
+            modelBuilder.Entity<Order>().HasOne(p => p.CustomerEntity)
+                                        .WithMany(p => p.OrderEntities);
         }
     }
 }

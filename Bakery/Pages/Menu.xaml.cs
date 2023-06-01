@@ -32,6 +32,8 @@ namespace bakery
 
             usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
             rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
+            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
+            ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
         }
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
@@ -51,6 +53,14 @@ namespace bakery
             window.ShowDialog();
 
             RefreshRolesTable();
+        }
+        private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddCustomer window = new AddCustomer();
+            window.Owner = mainWindow;
+            window.ShowDialog();
+
+            RefreshCustomersTable();
         }
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
         {
@@ -88,6 +98,20 @@ namespace bakery
                 MessageBox.Show("Выберите запись для редактирования");
             }
         }
+        private void EditCustomerButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Customer customer = customersDataGrid.SelectedItem as Customer;
+
+            if (customer != null)
+            {
+                EditCustomer window = new EditCustomer(customer);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshCustomersTable();
+                RefreshOrdersTable();
+            }
+        }
 
         private void RemoveUserButton_Click(object sender, RoutedEventArgs e)
         {
@@ -122,6 +146,34 @@ namespace bakery
             }
             
         }
+        private void RemoveCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            Customer customer = customersDataGrid.SelectedItem as Customer;
+
+            if (customer != null)
+            {
+                DatabaseControl.RemoveCustomer(customer);
+                RefreshCustomersTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+        }
+        private void RemoveOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            Order order = ordersDataGrid.SelectedItem as Order;
+
+            if (order != null)
+            {
+                DatabaseControl.RemoveOrder(order);
+                RefreshOrdersTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+        }
 
         public void RefreshUsersTable()
         {
@@ -142,11 +194,26 @@ namespace bakery
             rolesDataGrid.ItemsSource = null;
             rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
         }
+        public void RefreshCustomersTable()
+        {
+            customersDataGrid.ItemsSource = null;
+            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
+        }
+        public void RefreshOrdersTable()
+        {
+            ordersDataGrid.ItemsSource = null;
+            ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
+        }
 
         private void SearchUserByFullName_KeyUp(object sender, KeyEventArgs e)
         {
             usersDataGrid.ItemsSource = null;
             usersDataGrid.ItemsSource = DatabaseControl.GetUsersForViewByFullName(searchUserByFullNameView.Text);
+        }
+        private void SearchCustomerByName_KeyUp(object sender, KeyEventArgs e)
+        {
+            customersDataGrid.ItemsSource = null;
+            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForViewByName(searchCustomerByNameView.Text);
         }
     }
 }
