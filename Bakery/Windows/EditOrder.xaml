@@ -1,0 +1,67 @@
+﻿<Window x:Class="bakery.Windows.EditOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bakery.Windows"
+        mc:Ignorable="d"
+        Title="Редактировать заказ" Height="600" Width="500"
+        ResizeMode="NoResize"
+        FontSize="14">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20" Grid.RowSpan="2">Редактирование заказа</TextBlock>
+
+            <Grid Margin="10">
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBlock Text="Дата"></TextBlock>
+                    <TextBox x:Name="dateView" Margin="0 10 0 0" MinWidth="100" MinHeight="25" MaxWidth="100"></TextBox>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Center" Margin="0 0 140 0">
+                    <TextBlock Text="Статус"></TextBlock>
+                    <ComboBox Name="statusView" Margin="0 10 0 0" SelectedIndex="0" MaxWidth="110">
+                        <TextBlock>Не оплачен</TextBlock>
+                        <TextBlock>В работе</TextBlock>
+                        <TextBlock>Готов</TextBlock>
+                        <TextBlock>Доставлен</TextBlock>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock Text="Заказчик"></TextBlock>
+                    <ComboBox Name="customerView" Margin="0 10 0 0" SelectedValuePath="Id" Width="240" MaxWidth="240">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding Path=Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="Состав" Margin="10 0 0 0" VerticalAlignment="Bottom"></TextBlock>
+
+            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="320">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название"
+                                        Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Количество" MaxWidth="100"
+                                        Binding="{Binding Quantity}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button Margin="10 0 0 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Click="AddProductButton_Click">Добавить продукцию</Button>
+            <Button Margin="0 0 20 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Click="RemoveProductButton_Click">Удалить продукцию</Button>
+            <Button Margin="0 0 10 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Click="EditButton_Click">Изменить заказ</Button>
+        </Grid>
+    </Grid>
+</Window>

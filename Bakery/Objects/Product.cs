@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace bakery.Objects
 {
-    public class Order
+    public class Product
     {
         public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public string Status { get; set; }
-        public int CustomerId { get; set; }
-        public Customer CustomerEntity { get; set; }
+        public string Title { get; set; }
+        public decimal Weight { get; set; }
+        public decimal Price { get; set; }
         public List<Ordered_Product> OrderedProductEntities { get; set; }
     }
 }

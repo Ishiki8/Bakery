@@ -34,6 +34,7 @@ namespace bakery
             rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
             customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
             ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
+            productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView();
         }
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
@@ -62,6 +63,31 @@ namespace bakery
 
             RefreshCustomersTable();
         }
+        private void AddOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddOrder window = new AddOrder();
+            window.Owner = mainWindow;
+            window.ShowDialog();
+
+            RefreshOrdersTable();
+        }
+        private void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddProduct window = new AddProduct();
+            window.Owner = mainWindow;
+            window.ShowDialog();
+
+            RefreshProductsTable();
+        }
+        private void AddRawButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddRaw window = new AddRaw();
+            window.Owner = mainWindow;
+            window.ShowDialog();
+
+            RefreshCustomersTable();
+        }
+
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
         {
             User user = usersDataGrid.SelectedItem as User;
@@ -110,6 +136,48 @@ namespace bakery
 
                 RefreshCustomersTable();
                 RefreshOrdersTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+            }
+        }
+
+        private void EditOrderButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Order order = ordersDataGrid.SelectedItem as Order;
+
+            if (order != null)
+            {
+                EditOrder window = new EditOrder(order, order.Id);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshOrdersTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+            }
+        }
+
+
+
+        private void EditProductButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Product product = productsDataGrid.SelectedItem as Product;
+
+            if (product != null)
+            {
+                EditProduct window = new EditProduct(product);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshProductsTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
             }
         }
 
@@ -174,6 +242,20 @@ namespace bakery
                 MessageBox.Show("Выберите запись для удаления");
             }
         }
+        private void RemoveProductButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Product product = productsDataGrid.SelectedItem as Product;
+
+            if (product != null)
+            {
+                DatabaseControl.RemoveProduct(product);
+                RefreshProductsTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+        }
 
         public void RefreshUsersTable()
         {
@@ -204,6 +286,11 @@ namespace bakery
             ordersDataGrid.ItemsSource = null;
             ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
         }
+        public void RefreshProductsTable()
+        {
+            productsDataGrid.ItemsSource= null;
+            productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView();
+        }
 
         private void SearchUserByFullName_KeyUp(object sender, KeyEventArgs e)
         {
@@ -214,6 +301,11 @@ namespace bakery
         {
             customersDataGrid.ItemsSource = null;
             customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForViewByName(searchCustomerByNameView.Text);
+        }
+        private void SearchProductByName_KeyUp(object sender, KeyEventArgs e)
+        {
+            productsDataGrid.ItemsSource = null;
+            productsDataGrid.ItemsSource = DatabaseControl.GetProductsForViewByName(searchProductByNameView.Text);
         }
     }
 }

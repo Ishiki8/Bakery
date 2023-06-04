@@ -121,14 +121,7 @@ namespace bakery.Database
         {
             using (DbAppContext ctx = new DbAppContext())
             {
-                return ctx.Order.Include(p => p.CustomerEntity).ToList();
-            }
-        }
-        public static List<Customer> GetCustomersForViewByName(string name)
-        {
-            using (DbAppContext ctx = new DbAppContext())
-            {
-                return ctx.Customer.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{name.ToLower()}%")).ToList();
+                return ctx.Order.Include(p => p.CustomerEntity).Include(p => p.OrderedProductEntities).ToList();
             }
         }
         public static void AddOrder(Order order)
@@ -165,6 +158,7 @@ namespace bakery.Database
                 {
                     return;
                 }
+                // ДОПИСАТЬ. ПЕРЕД УДАЛЕНИЕМ НУЖНО ОЧИСТИТЬ ВСЕ СВЯЗАННЫЕ ЗАКАЗЫ В Ordered_Product
                 ctx.Order.Remove(order);
                 ctx.SaveChanges();
             }
@@ -174,6 +168,13 @@ namespace bakery.Database
             using (DbAppContext ctx = new DbAppContext())
             {
                 return ctx.Customer.Include(p => p.OrderEntities).ToList();
+            }
+        }
+        public static List<Customer> GetCustomersForViewByName(string name)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Customer.Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{name.ToLower()}%")).ToList();
             }
         }
         public static void AddCustomer(Customer customer)
@@ -222,6 +223,94 @@ namespace bakery.Database
                 ctx.SaveChanges();
             }
         }
+        public static List<Product> GetProductsForView()
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Product.Include(p => p.OrderedProductEntities).ToList();
+            }
+        }
+        public static List<Product> GetProductsForViewByName(string title)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Product.Where(p => EF.Functions.Like(p.Title.ToLower(), $"%{title.ToLower()}%")).ToList();
+            }
+        }
+        public static void AddProduct(Product product)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                ctx.Product.Add(product);
+                ctx.SaveChanges();
+            }
+        }
+        public static void UpdateProduct(Product product)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                Product _product = ctx.Product.FirstOrDefault(p => p.Id == product.Id);
 
+                if (_product == null)
+                {
+                    return;
+                }
+
+                _product.Title = product.Title;
+                _product.Weight = product.Weight;
+                _product.Price = product.Price;
+
+                ctx.SaveChanges();
+            }
+        }
+        public static void RemoveProduct(Product product)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (product == null)
+                {
+                    return;
+                }
+
+                if (product.OrderedProductEntities.Count > 0)
+                {
+                    MessageBox.Show("Невозможно удалить продукцию, поскольку она используется в одном или нескольких заказах!");
+                    return;
+                }
+
+                ctx.Product.Remove(product);
+                ctx.SaveChanges();
+            }
+        }
+
+        public static List<Ordered_Product> GetOrderedProductsForView()
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.Ordered_Product.Include(p => p.OrderEntity).Include(p => p.ProductEntity).ToList();
+            }
+        }
+        public static void AddProductToOrder(Ordered_Product ordered_product)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                ctx.Ordered_Product.Add(ordered_product);
+                ctx.SaveChanges();
+            }
+        }
+
+        public static void RemoveProductFromOrder(Ordered_Product ordered_product)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (ordered_product == null)
+                {
+                    return;
+                }
+
+                ctx.Ordered_Product.Remove(ordered_product);
+                ctx.SaveChanges();
+            }
+        }
     }
 }

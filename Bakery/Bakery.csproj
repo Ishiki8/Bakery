@@ -146,8 +146,23 @@
     </ApplicationDefinition>
     <Compile Include="Objects\Customer.cs" />
     <Compile Include="Objects\Order.cs" />
+    <Compile Include="Objects\OrderedProduct.cs" />
+    <Compile Include="Objects\Product.cs" />
+    <Compile Include="Classes\ProductToOrder.cs" />
     <Compile Include="Windows\AddCustomer.xaml.cs">
       <DependentUpon>AddCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddOrder.xaml.cs">
+      <DependentUpon>AddOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddProduct.xaml.cs">
+      <DependentUpon>AddProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddProductToOrder.xaml.cs">
+      <DependentUpon>AddProductToOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddRaw.xaml.cs">
+      <DependentUpon>AddRaw.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\AddRole.xaml.cs">
       <DependentUpon>AddRole.xaml</DependentUpon>
@@ -157,6 +172,12 @@
     </Compile>
     <Compile Include="Windows\EditCustomer.xaml.cs">
       <DependentUpon>EditCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditOrder.xaml.cs">
+      <DependentUpon>EditOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditProduct.xaml.cs">
+      <DependentUpon>EditProduct.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditRole.xaml.cs">
       <DependentUpon>EditRole.xaml</DependentUpon>
@@ -195,6 +216,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AddOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddProductToOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddRaw.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AddRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +241,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\EditCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

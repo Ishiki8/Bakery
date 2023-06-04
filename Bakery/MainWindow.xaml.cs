@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,16 @@ namespace bakery
             }  
         }
 
+        public static bool TextIsDate(string text)
+        {
+            var dateFormat = "yyyy-MM-dd";
+            DateTime scheduleDate;
+            if (DateTime.TryParseExact(text, dateFormat, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out scheduleDate))
+            {
+                return true;
+            }
+            return false;
+        }
 
     }
 }
