@@ -18,22 +18,23 @@ using System.Windows.Shapes;
 namespace bakery.Windows
 {
     /// <summary>
-    /// Interaction logic for AddProductToOrder.xaml
+    /// Interaction logic for AddRawToSupply.xaml
     /// </summary>
-    public partial class AddProductToOrder : Window
+    public partial class AddRawToSupply : Window
     {
-        public AddProductToOrder()
+        public AddRawToSupply()
         {
             InitializeComponent();
-            productView.ItemsSource = DatabaseControl.GetProductsForView();
+            rawView.ItemsSource = DatabaseControl.GetRawForView();
         }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (productView.SelectedValue == null)
+                if (rawView.SelectedValue == null)
                 {
-                    throw new Exception("Выберите продукцию!");
+                    throw new Exception("Выберите сырье!");
                 }
 
                 int quantity;
@@ -47,43 +48,46 @@ namespace bakery.Windows
                     throw new Exception("Количество должно быть числом!");
                 }
 
-                ProductToOrder productsOrder = new ProductToOrder() { Name = (productView.SelectedItem as Product).Title, 
-                                                                    Quantity = quantity, 
-                                                                    Id = (int)productView.SelectedValue };
-
-                if (!(AddOrder.collection == null))
+                RawToSupply rawToSupply = new RawToSupply()
                 {
-                    foreach (ProductToOrder order in AddOrder.collection)
+                    Name = (rawView.SelectedItem as Raw).Title,
+                    Quantity = quantity,
+                    Id = (int)rawView.SelectedValue
+                };
+
+                if (!(AddSupply.collection == null))
+                {
+                    foreach (RawToSupply raw in AddSupply.collection)
                     {
-                        if (order.Name == productsOrder.Name)
+                        if (raw.Name == rawToSupply.Name)
                         {
-                            throw new Exception("Этот вид продукции уже есть в заказе!");
+                            throw new Exception("Этот вид сырья уже есть в поставке!");
                         }
                     }
 
-                    AddOrder.collection.Add(productsOrder);
+                    AddSupply.collection.Add(rawToSupply);
                 }
                 
-                if (!(EditOrder.collection == null))
+                if (!(EditSupply.collection == null))
                 {
-                    foreach (ProductToOrder order in EditOrder.collection)
+                    foreach (RawToSupply raw in EditSupply.collection)
                     {
-                        if (order.Name == productsOrder.Name)
+                        if (raw.Name == rawToSupply.Name)
                         {
-                            throw new Exception("Этот вид продукции уже есть в заказе!");
+                            throw new Exception("Этот вид сырья уже есть в поставке!");
                         }
                     }
 
-                    EditOrder.collection.Add(productsOrder);
+                    EditSupply.collection.Add(rawToSupply);
                 }
 
                 Close();
-            } 
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
     }
 }

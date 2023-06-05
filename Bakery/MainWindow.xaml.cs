@@ -21,6 +21,8 @@ namespace bakery
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string dbUser;
+        public string dbUserRole;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace bakery
             }
             else if (pages == pages.Menu)
             {
-                MainFrame.Navigate(new Menu(this));
+                MainFrame.Navigate(new Menu(this, dbUser, dbUserRole));
             }  
         }
 

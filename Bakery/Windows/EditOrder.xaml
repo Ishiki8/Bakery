@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Редактировать заказ" Height="600" Width="500"
         ResizeMode="NoResize"
-        FontSize="14">
+        FontSize="14"
+        Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -22,12 +23,12 @@
             <Grid Margin="10">
                 <StackPanel HorizontalAlignment="Left">
                     <TextBlock Text="Дата"></TextBlock>
-                    <TextBox x:Name="dateView" Margin="0 10 0 0" MinWidth="100" MinHeight="25" MaxWidth="100"></TextBox>
+                    <TextBox x:Name="dateView" Margin="0 10 0 0" Width="100" Height="25"></TextBox>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" Margin="0 0 140 0">
                     <TextBlock Text="Статус"></TextBlock>
-                    <ComboBox Name="statusView" Margin="0 10 0 0" SelectedIndex="0" MaxWidth="110">
+                    <ComboBox Name="statusView" Margin="0 10 0 0" SelectedIndex="0" Width="110">
                         <TextBlock>Не оплачен</TextBlock>
                         <TextBlock>В работе</TextBlock>
                         <TextBlock>Готов</TextBlock>
@@ -37,7 +38,7 @@
 
                 <StackPanel HorizontalAlignment="Right">
                     <TextBlock Text="Заказчик"></TextBlock>
-                    <ComboBox Name="customerView" Margin="0 10 0 0" SelectedValuePath="Id" Width="240" MaxWidth="240">
+                    <ComboBox Name="customerView" Margin="0 10 0 0" SelectedValuePath="Id" Width="240">
                         <ComboBox.ItemTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Path=Name}"/>
@@ -49,7 +50,7 @@
 
             <TextBlock Text="Состав" Margin="10 0 0 0" VerticalAlignment="Bottom"></TextBlock>
 
-            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="320">
+            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="315">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название"
                                         Binding="{Binding Name}"/>

@@ -55,7 +55,10 @@ namespace bakery
                         {
                             if (user.Login == LoginField.Text && user.Password == Password.Password)
                             {
-                                flag = true; break;
+                                flag = true;
+                                mainWindow.dbUser = user.FullName;
+                                mainWindow.dbUserRole = user.RoleEntity.Title;
+                                break;
                             }
                         }
 

@@ -17,15 +17,36 @@ using System.Windows.Shapes;
 namespace bakery.Windows
 {
     /// <summary>
-    /// Interaction logic for AddRaw.xaml
+    /// Interaction logic for EditRaw.xaml
     /// </summary>
-    public partial class AddRaw : Window
+    public partial class EditRaw : Window
     {
-        public AddRaw()
+        Raw _tempRaw;
+        public EditRaw(Raw raw)
         {
             InitializeComponent();
+
+            _tempRaw = raw;
+
+            titleView.Text = raw.Title;
+            weightView.Text = raw.Weight.ToString();
+            priceView.Text = raw.Price.ToString();
+            
+            if (raw.InStock == "Есть")
+            {
+                inStockView.IsChecked = true;
+            }
+            else if (raw.InStock == "Нет")
+            {
+                inStockView.IsChecked = false;
+            }
+            else
+            {
+                inStockView.IsChecked = null;
+            }
         }
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -46,7 +67,6 @@ namespace bakery.Windows
 
                 decimal weight;
                 decimal price;
-                string stock;
 
                 if (!decimal.TryParse(weightView.Text, out weight))
                 {
@@ -58,26 +78,24 @@ namespace bakery.Windows
                     throw new Exception("Цена должна быть числом!");
                 }
 
+                _tempRaw.Title = titleView.Text;
+                _tempRaw.Weight = weight;
+                _tempRaw.Price = price;
+                
                 if (inStockView.IsChecked == true)
                 {
-                    stock = "Есть";
+                    _tempRaw.InStock = "Есть";
                 }
                 else if (inStockView.IsChecked == false)
                 {
-                    stock = "Нет";
+                    _tempRaw.InStock = "Нет";
                 }
                 else
                 {
-                    stock = "Неизвестно";
+                    _tempRaw.InStock = "Неизвестно";
                 }
 
-                DatabaseControl.AddRaw(new Raw
-                {
-                    Title = titleView.Text,
-                    Weight = weight,
-                    Price = price,
-                    InStock = stock
-                });
+                DatabaseControl.UpdateRaw(_tempRaw);
                 Close();
 
             }

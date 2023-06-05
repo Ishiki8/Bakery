@@ -1,11 +1,11 @@
-﻿<Window x:Class="bakery.Windows.AddRaw"
+﻿<Window x:Class="bakery.Windows.EditRaw"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Добавить сырье" Height="450" Width="400"
+        Title="Редактировать сырье" Height="450" Width="400"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
@@ -17,7 +17,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление сырья</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Редактирование сырья</TextBlock>
 
             <TextBlock Text="Название" Margin="10 0 0 0"></TextBlock>
             <TextBox x:Name="titleView" Margin="10"></TextBox>
@@ -28,10 +28,10 @@
             <TextBlock Text="Цена" Margin="10 0 0 0"></TextBlock>
             <TextBox x:Name="priceView" Margin="10"></TextBox>
 
-            <CheckBox x:Name="inStockView" Content="На складе" Margin="10" IsThreeState="True" IsChecked="{x:Null}"></CheckBox>
+            <CheckBox x:Name="inStockView" Content="На складе" Margin="10" IsThreeState="True"></CheckBox>
         </StackPanel>
         <DockPanel Grid.Row="1">
-            <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
+            <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="EditButton_Click">Изменить</Button>
         </DockPanel>
     </Grid>
 </Window>

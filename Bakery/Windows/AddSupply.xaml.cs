@@ -4,7 +4,6 @@ using bakery.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +19,16 @@ using System.Windows.Shapes;
 namespace bakery.Windows
 {
     /// <summary>
-    /// Interaction logic for AddOrder.xaml
+    /// Interaction logic for AddSupply.xaml
     /// </summary>
-    public partial class AddOrder : Window
+    public partial class AddSupply : Window
     {
-        public static ObservableCollection<ProductToOrder> collection = null;
-        public AddOrder()
+        public static ObservableCollection<RawToSupply> collection = null;
+        public AddSupply()
         {
             InitializeComponent();
-            customerView.ItemsSource = DatabaseControl.GetCustomersForView();
+            providerView.ItemsSource = DatabaseControl.GetProvidersForView();
+
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -43,37 +43,37 @@ namespace bakery.Windows
                 {
                     throw new Exception("Дата введена неверно. Верный формат гггг-мм-дд!");
                 }
-                else if (DateTime.Parse(dateView.Text) > DateTime.Now)
+                else if (DateTime.Parse(dateView.Text) > DateTime.Now && statusView.Text == "Совершена")
                 {
-                    throw new Exception("Дата заказа не может превышать текущую!");
+                    throw new Exception("Поставка не может быть совершена, поскольку дата превышает текущую!");
                 }
 
-                if (customerView.SelectedValue == null)
+                if (providerView.SelectedValue == null)
                 {
-                    throw new Exception("Не указан заказчик!");
+                    throw new Exception("Не указан поставщик!");
                 }
 
                 if (collection.Count == 0)
                 {
-                    throw new Exception("Не выбран ни один вид продукции!");
+                    throw new Exception("Не выбран ни один вид сырья!");
                 }
 
-                DatabaseControl.AddOrder(new Order
+                DatabaseControl.AddSupply(new Supply
                 {
                     Date = DateTime.Parse(dateView.Text),
                     Status = statusView.Text,
-                    CustomerId = (int)customerView.SelectedValue,
+                    ProviderId = (int)providerView.SelectedValue,
                 });
 
-                int orderId = DatabaseControl.GetOrdersForView().Last().Id;
+                int supplyId = DatabaseControl.GetSuppliesForView().Last().Id;
 
-                foreach (ProductToOrder product in collection)
+                foreach (RawToSupply raw in collection)
                 {
-                    DatabaseControl.AddProductToOrder(new Ordered_Product
+                    DatabaseControl.AddRawToSupply(new Supplied_Raw
                     {
-                        OrderId = orderId,
-                        ProductId = product.Id,
-                        Quantity = product.Quantity
+                        SupplyId = supplyId,
+                        RawId = raw.Id,
+                        Quantity = raw.Quantity
                     });
                 }
                 Close();
@@ -85,22 +85,23 @@ namespace bakery.Windows
             }
         }
 
-        private void AddProductButton_Click(Object sender, RoutedEventArgs e)
+        private void AddRawButton_Click(Object sender, RoutedEventArgs e)
         {
             if (collection == null)
             {
-                collection = new ObservableCollection<ProductToOrder>();
-                productsDataGrid.ItemsSource = collection;
+                collection = new ObservableCollection<RawToSupply>();
+                rawDataGrid.ItemsSource = collection;
             }
 
-            AddProductToOrder window = new AddProductToOrder();
+            AddRawToSupply window = new AddRawToSupply();
             window.Owner = this;
             window.ShowDialog();
         }
-        private void RemoveProductButton_Click(Object sender, RoutedEventArgs e)
+
+        private void RemoveRawButton_Click(Object sender, RoutedEventArgs e)
         {
-            ProductToOrder product = productsDataGrid.SelectedItem as ProductToOrder;
-            collection.Remove(product);
+            RawToSupply raw = rawDataGrid.SelectedItem as RawToSupply;
+            collection.Remove(raw);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

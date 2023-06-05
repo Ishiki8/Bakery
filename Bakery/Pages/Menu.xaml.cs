@@ -24,17 +24,54 @@ namespace bakery
     public partial class Menu : Page
     {
         public MainWindow mainWindow;
-        
-        public Menu(MainWindow _mainWindow)
+
+        public Menu(MainWindow _mainWindow, string dbUser = "", string dbUserRole = "")
         {
             InitializeComponent();
             mainWindow = _mainWindow;
 
-            usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
-            rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
-            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
+            dbUserView.Text = dbUser;
+            dbUserRoleView.Text = dbUserRole;
+
+            if (dbUserRole == "Администратор" || dbUserRole == "Administrator")
+            {
+                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
+                rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
+                
+            }
+            else
+            {
+                tabControl.Items.Remove(usersRolesTabItem);
+            }
+
+            if (dbUserRole != "Пекарь" && dbUserRole != "Baker")
+            {
+                customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
+                providersDataGrid.ItemsSource = DatabaseControl.GetProvidersForView();
+            }
+            else
+            {
+                customersOrdersTabItem.Header = "Заказы";
+                customersDataGrid.Visibility = Visibility.Collapsed;
+                customersText.Visibility = Visibility.Collapsed;
+                customersSearch.Visibility = Visibility.Collapsed;
+                customersButtons.Visibility = Visibility.Collapsed;
+                customersColumn.Width = new GridLength(0);
+                
+            }
+            
             ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
             productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView();
+            
+            
+            suppliesDataGrid.ItemsSource = DatabaseControl.GetSuppliesForView();
+            rawDataGrid.ItemsSource = DatabaseControl.GetRawForView();
+
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            mainWindow.OpenPage(MainWindow.pages.Login);
         }
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
@@ -55,6 +92,7 @@ namespace bakery
 
             RefreshRolesTable();
         }
+
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             AddCustomer window = new AddCustomer();
@@ -63,6 +101,7 @@ namespace bakery
 
             RefreshCustomersTable();
         }
+
         private void AddOrderButton_Click(object sender, RoutedEventArgs e)
         {
             AddOrder window = new AddOrder();
@@ -71,6 +110,7 @@ namespace bakery
 
             RefreshOrdersTable();
         }
+
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             AddProduct window = new AddProduct();
@@ -79,13 +119,32 @@ namespace bakery
 
             RefreshProductsTable();
         }
+
+        private void AddProviderButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddProvider window = new AddProvider();
+            window.Owner = mainWindow;
+            window.ShowDialog();
+
+            RefreshProvidersTable();
+        }
+
+        private void AddSupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddSupply window = new AddSupply();
+            window.Owner = mainWindow;
+            window.ShowDialog();
+
+            RefreshSuppliesTable();
+        }
+
         private void AddRawButton_Click(object sender, RoutedEventArgs e)
         {
             AddRaw window = new AddRaw();
             window.Owner = mainWindow;
             window.ShowDialog();
 
-            RefreshCustomersTable();
+            RefreshRawTable();
         }
 
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
@@ -106,6 +165,7 @@ namespace bakery
                 MessageBox.Show("Выберите запись для редактирования");
             }
         }
+
         private void EditRoleButton_Click(Object sender, RoutedEventArgs e)
         {
             Role role = rolesDataGrid.SelectedItem as Role;
@@ -124,6 +184,7 @@ namespace bakery
                 MessageBox.Show("Выберите запись для редактирования");
             }
         }
+
         private void EditCustomerButton_Click(Object sender, RoutedEventArgs e)
         {
             Customer customer = customersDataGrid.SelectedItem as Customer;
@@ -154,14 +215,13 @@ namespace bakery
                 window.ShowDialog();
 
                 RefreshOrdersTable();
+                RefreshCustomersTable();
             }
             else
             {
                 MessageBox.Show("Выберите запись для редактирования");
             }
         }
-
-
 
         private void EditProductButton_Click(Object sender, RoutedEventArgs e)
         {
@@ -174,6 +234,62 @@ namespace bakery
                 window.ShowDialog();
 
                 RefreshProductsTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+            }
+        }
+
+        private void EditProviderButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Provider provider = providersDataGrid.SelectedItem as Provider;
+
+            if (provider != null)
+            {
+                EditProvider window = new EditProvider(provider);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshProvidersTable();
+                RefreshSuppliesTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+            }
+        }
+
+        private void EditSupplyButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Supply supply = suppliesDataGrid.SelectedItem as Supply;
+
+            if (supply != null)
+            {
+                EditSupply window = new EditSupply(supply, supply.Id);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshSuppliesTable();
+                RefreshProvidersTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+            }
+        }
+
+        private void EditRawButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Raw raw = rawDataGrid.SelectedItem as Raw;
+
+            if (raw != null)
+            {
+                EditRaw window = new EditRaw(raw);
+                window.Owner = mainWindow;
+                window.ShowDialog();
+
+                RefreshRawTable();
             }
             else
             {
@@ -198,6 +314,7 @@ namespace bakery
             }
             
         }
+
         private void RemoveRoleButton_Click(object sender, RoutedEventArgs e)
         {
             Role role = rolesDataGrid.SelectedItem as Role;
@@ -211,9 +328,9 @@ namespace bakery
             else
             {
                 MessageBox.Show("Выберите запись для удаления");
-            }
-            
+            }      
         }
+
         private void RemoveCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             Customer customer = customersDataGrid.SelectedItem as Customer;
@@ -228,6 +345,7 @@ namespace bakery
                 MessageBox.Show("Выберите запись для удаления");
             }
         }
+
         private void RemoveOrderButton_Click(object sender, RoutedEventArgs e)
         {
             Order order = ordersDataGrid.SelectedItem as Order;
@@ -242,6 +360,7 @@ namespace bakery
                 MessageBox.Show("Выберите запись для удаления");
             }
         }
+
         private void RemoveProductButton_Click(Object sender, RoutedEventArgs e)
         {
             Product product = productsDataGrid.SelectedItem as Product;
@@ -257,55 +376,133 @@ namespace bakery
             }
         }
 
-        public void RefreshUsersTable()
+        private void RemoveProviderButton_Click(object sender, RoutedEventArgs e)
         {
-            usersDataGrid.ItemsSource = null;
+            Provider provider = providersDataGrid.SelectedItem as Provider;
 
-            if (searchUserByFullNameView.Text != null)
+            if (provider != null)
             {
-                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForViewByFullName(searchUserByFullNameView.Text);
+                DatabaseControl.RemoveProvider(provider);
+                RefreshProvidersTable();
             }
             else
             {
-                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
+                MessageBox.Show("Выберите запись для удаления");
             }
-            
         }
+
+        private void RemoveSupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            Supply supply = suppliesDataGrid.SelectedItem as Supply;
+
+            if (supply != null)
+            {
+                DatabaseControl.RemoveSupply(supply);
+                RefreshSuppliesTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+        }
+
+        private void RemoveRawButton_Click(Object sender, RoutedEventArgs e)
+        {
+            Raw raw = rawDataGrid.SelectedItem as Raw;
+
+            if (raw != null)
+            {
+                DatabaseControl.RemoveRaw(raw);
+                RefreshRawTable();
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
+        }
+
+        public void RefreshUsersTable()
+        {
+            usersDataGrid.ItemsSource = null;
+            usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView(searchUserByFullNameView.Text);
+ 
+        }
+
         public void RefreshRolesTable()
         {
             rolesDataGrid.ItemsSource = null;
             rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
         }
+
         public void RefreshCustomersTable()
         {
             customersDataGrid.ItemsSource = null;
-            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
+            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView(searchCustomerByNameView.Text);
         }
+
         public void RefreshOrdersTable()
         {
             ordersDataGrid.ItemsSource = null;
-            ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
+            ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView(searchOrderByCustomerView.Text);
         }
+
         public void RefreshProductsTable()
         {
             productsDataGrid.ItemsSource= null;
-            productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView();
+            productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView(searchProductByNameView.Text);
+        }
+
+        public void RefreshProvidersTable()
+        {
+            providersDataGrid.ItemsSource = null;
+            providersDataGrid.ItemsSource = DatabaseControl.GetProvidersForView(searchProviderByNameView.Text);
+        }
+
+        public void RefreshSuppliesTable()
+        {
+            suppliesDataGrid.ItemsSource = null;
+            suppliesDataGrid.ItemsSource = DatabaseControl.GetSuppliesForView(searchSupplyByProviderView.Text);
+        }
+
+        public void RefreshRawTable()
+        {
+            rawDataGrid.ItemsSource = null;
+            rawDataGrid.ItemsSource = DatabaseControl.GetRawForView(searchRawByNameView.Text);
         }
 
         private void SearchUserByFullName_KeyUp(object sender, KeyEventArgs e)
         {
-            usersDataGrid.ItemsSource = null;
-            usersDataGrid.ItemsSource = DatabaseControl.GetUsersForViewByFullName(searchUserByFullNameView.Text);
+            RefreshUsersTable();
         }
+
         private void SearchCustomerByName_KeyUp(object sender, KeyEventArgs e)
         {
-            customersDataGrid.ItemsSource = null;
-            customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForViewByName(searchCustomerByNameView.Text);
+            RefreshCustomersTable();
         }
+
         private void SearchProductByName_KeyUp(object sender, KeyEventArgs e)
         {
-            productsDataGrid.ItemsSource = null;
-            productsDataGrid.ItemsSource = DatabaseControl.GetProductsForViewByName(searchProductByNameView.Text);
+            RefreshProductsTable();
+        }
+
+        private void SearchOrderByCustomer_KeyUp(object sender, KeyEventArgs e)
+        {
+            RefreshOrdersTable();
+        }
+
+        private void SearchProviderByName_KeyUp(object sender, KeyEventArgs e)
+        {
+            RefreshProvidersTable();
+        }
+
+        private void SearchRawByName_KeyUp(object sender, KeyEventArgs e)
+        {
+            RefreshRawTable();
+        }
+
+        private void SearchSupplyByProvider_KeyUp(object sender, KeyEventArgs e)
+        {
+            RefreshSuppliesTable();
         }
     }
 }
