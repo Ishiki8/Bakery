@@ -24,11 +24,15 @@ namespace bakery
     public partial class Menu : Page
     {
         public MainWindow mainWindow;
+        private string dbUser;
+        private string dbUserRole;
 
-        public Menu(MainWindow _mainWindow, string dbUser = "", string dbUserRole = "")
+        public Menu(MainWindow _mainWindow, string _dbUser = "", string _dbUserRole = "")
         {
             InitializeComponent();
             mainWindow = _mainWindow;
+            dbUser = _dbUser;
+            dbUserRole = _dbUserRole;
 
             dbUserView.Text = dbUser;
             dbUserRoleView.Text = dbUserRole;
@@ -42,12 +46,21 @@ namespace bakery
             else
             {
                 tabControl.Items.Remove(usersRolesTabItem);
+
+                customersIdColumn.Visibility = Visibility.Collapsed;
+                ordersIdColumn.Visibility = Visibility.Collapsed;
+                providersIdColumn.Visibility = Visibility.Collapsed;
+                suppliesIdColumn.Visibility = Visibility.Collapsed;
+                productsIdColumn.Visibility = Visibility.Collapsed;
+                rawIdColumn.Visibility = Visibility.Collapsed;
             }
 
             if (dbUserRole != "Пекарь" && dbUserRole != "Baker")
             {
                 customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
+                ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
                 providersDataGrid.ItemsSource = DatabaseControl.GetProvidersForView();
+                suppliesDataGrid.ItemsSource = DatabaseControl.GetSuppliesForView();
             }
             else
             {
@@ -55,16 +68,38 @@ namespace bakery
                 customersDataGrid.Visibility = Visibility.Collapsed;
                 customersText.Visibility = Visibility.Collapsed;
                 customersSearch.Visibility = Visibility.Collapsed;
-                customersButtons.Visibility = Visibility.Collapsed;
+                addCustomerButton.Visibility = Visibility.Collapsed;
                 customersColumn.Width = new GridLength(0);
+
+                ordersContextEdit.Header = "Подробнее";
+                ordersContextRemove.Visibility = Visibility.Collapsed;
+                addOrderButton.Visibility = Visibility.Collapsed;
+                ordersButtons.Visibility = Visibility.Collapsed;
+                ordersDateColumn.Width = DataGridLength.Auto;
+                ordersStatusColumn.Width = DataGridLength.Auto;
+                ordersCustomerColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+
+                ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView().Where(p => p.Status != "Доставлен");
                 
+                providersSuppliesTabItem.Visibility = Visibility.Collapsed;
+
+                productsRawTabItem.Header = "Сырье";
+                productsDataGrid.Visibility = Visibility.Collapsed;
+                productsText.Visibility = Visibility.Collapsed;
+                productsSearch.Visibility = Visibility.Collapsed;
+                addProductButton.Visibility = Visibility.Collapsed;
+                productsColumn.Width = new GridLength(0);
+
+                addRawButton.Visibility = Visibility.Collapsed;
+                rawPriceColumn.Visibility = Visibility.Collapsed;
+                rawContext.Visibility = Visibility.Collapsed;
+                rawButtons.Visibility = Visibility.Collapsed;
+                rawTitleColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                rawWeightColumn.Width = DataGridLength.Auto;
+                rawInStockColumn.Width = DataGridLength.Auto;
             }
             
-            ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
             productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView();
-            
-            
-            suppliesDataGrid.ItemsSource = DatabaseControl.GetSuppliesForView();
             rawDataGrid.ItemsSource = DatabaseControl.GetRawForView();
 
         }
@@ -210,7 +245,17 @@ namespace bakery
 
             if (order != null)
             {
-                EditOrder window = new EditOrder(order, order.Id);
+                EditOrder window;
+
+                if (dbUserRole == "Пекарь" || dbUserRole == "Baker")
+                {
+                    window = new EditOrder(order, order.Id, true);
+                }
+                else
+                {
+                    window = new EditOrder(order, order.Id);
+                }
+                
                 window.Owner = mainWindow;
                 window.ShowDialog();
 
@@ -443,7 +488,16 @@ namespace bakery
         public void RefreshOrdersTable()
         {
             ordersDataGrid.ItemsSource = null;
-            ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView(searchOrderByCustomerView.Text);
+
+            if (dbUserRole == "Пекарь" || dbUserRole == "Baker")
+            {
+                ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView(searchOrderByCustomerView.Text)
+                                                            .Where(p => p.Status != "Доставлен");
+            }
+            else
+            {
+                ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView(searchOrderByCustomerView.Text);
+            }    
         }
 
         public void RefreshProductsTable()

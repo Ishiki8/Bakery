@@ -50,7 +50,7 @@
 
             <TextBlock Text="Состав" Margin="10 0 0 0" VerticalAlignment="Bottom"></TextBlock>
 
-            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="315">
+            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="300">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название"
                                         Binding="{Binding Name}"/>

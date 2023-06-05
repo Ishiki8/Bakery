@@ -18,7 +18,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20" Grid.RowSpan="2">Редактирование заказа</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20" Grid.RowSpan="2" x:Name="orderEditText">Редактирование заказа</TextBlock>
 
             <Grid Margin="10">
                 <StackPanel HorizontalAlignment="Left">
@@ -32,7 +32,7 @@
                         <TextBlock>Не оплачен</TextBlock>
                         <TextBlock>В работе</TextBlock>
                         <TextBlock>Готов</TextBlock>
-                        <TextBlock>Доставлен</TextBlock>
+                        <TextBlock x:Name="arrivedStatus">Доставлен</TextBlock>
                     </ComboBox>
                 </StackPanel>
 
@@ -50,7 +50,7 @@
 
             <TextBlock Text="Состав" Margin="10 0 0 0" VerticalAlignment="Bottom"></TextBlock>
 
-            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="315">
+            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="300">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название"
                                         Binding="{Binding Name}"/>
@@ -60,9 +60,9 @@
             </DataGrid>
         </StackPanel>
         <Grid Grid.Row="1">
-            <Button Margin="10 0 0 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Click="AddProductButton_Click">Добавить продукцию</Button>
-            <Button Margin="0 0 20 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Click="RemoveProductButton_Click">Удалить продукцию</Button>
-            <Button Margin="0 0 10 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Click="EditButton_Click">Изменить заказ</Button>
+            <Button Margin="10 0 0 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Click="AddProductButton_Click" x:Name="addProductButton">Добавить продукцию</Button>
+            <Button Margin="0 0 20 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Click="RemoveProductButton_Click" x:Name="removeProductButton">Удалить продукцию</Button>
+            <Button Margin="0 0 10 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Click="EditButton_Click" x:Name="editButton">Изменить заказ</Button>
         </Grid>
     </Grid>
 </Window>

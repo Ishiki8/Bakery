@@ -47,18 +47,32 @@
                         <TextBox x:Name="searchUserByFullNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchUserByFullName_KeyUp"></TextBox>
                     </StackPanel>
                     
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="usersDataGrid" IsReadOnly="True" Margin="0 50 10 10">
+                    <DataGrid Grid.Column="1" Grid.Row="1"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="usersDataGrid" IsReadOnly="True" Margin="0 50 10 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="ФИО"
-                                                Binding="{Binding Path=FullName}"/>
+                                                Binding="{Binding Path=FullName}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Логин"
                                                 Binding="{Binding Path=Login}"/>
                             <DataGridTextColumn Header="Пароль"
                                                 Binding="{Binding Path=Password}"/>
                             <DataGridTextColumn Header="Роль"
                                                 Binding="{Binding Path=RoleEntity.Title}"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditUserButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveUserButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
@@ -69,40 +83,39 @@
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="1"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="0 5"
                             FontSize="14"
-                            Click="AddUserButton_Click">Добавить пользователя</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditUserButton_Click">Изменить пользователя</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveUserButton_Click">Удалить пользователя</Button>
-                    </StackPanel>
+                            Click="AddUserButton_Click"
+                            HorizontalAlignment="Left">Добавить пользователя</Button>
+                    
 
                     <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Роли</TextBlock>
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="rolesDataGrid" IsReadOnly="True" Margin="10 50 0 10">
+                    <DataGrid Grid.Column="2" Grid.Row="1"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="rolesDataGrid" IsReadOnly="True" Margin="10 50 0 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Название"
                                                 Binding="{Binding Path=Title}"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditRoleButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveRoleButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
@@ -113,32 +126,17 @@
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="10 5"
                             FontSize="14"
-                            Click="AddRoleButton_Click">Добавить роль</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditRoleButton_Click">Изменить роль</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveRoleButton_Click">Удалить роль</Button>
-                    </StackPanel>
+                            Click="AddRoleButton_Click"
+                            HorizontalAlignment="Left">Добавить роль</Button>
                 </Grid>
             </TabItem>
 
@@ -162,18 +160,35 @@
                         <TextBox x:Name="searchCustomerByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchCustomerByName_KeyUp"></TextBox>
                     </StackPanel>
 
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="customersDataGrid" IsReadOnly="True" Margin="0 50 10 10">
+                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False"
+                              MinColumnWidth="50" ColumnWidth="*" Name="customersDataGrid"
+                              IsReadOnly="True" Margin="0 50 10 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                x:Name="customersIdColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Наименование"
-                                                Binding="{Binding Path=Name}"/>
+                                                Binding="{Binding Path=Name}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Адрес"
                                                 Binding="{Binding Path=Address}"/>
                             <DataGridTextColumn Header="ИНН"
-                                                Binding="{Binding Path=ITN}"/>
+                                                Binding="{Binding Path=ITN}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Телефон"
-                                                Binding="{Binding Path=PhoneNumber}"/>
+                                                Binding="{Binding Path=PhoneNumber}"
+                                                Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditCustomerButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveCustomerButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
@@ -183,33 +198,19 @@
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
-
-                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" x:Name="customersButtons">
-                        <Button
+                    
+                    <Button
+                            Grid.Row="2" 
+                            Grid.Column="1"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="0 5"
                             FontSize="14"
-                            Click="AddCustomerButton_Click">Добавить заказчика</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditCustomerButton_Click">Изменить заказчика</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveCustomerButton_Click">Удалить заказчика</Button>
-                    </StackPanel>
+                            Click="AddCustomerButton_Click"
+                            HorizontalAlignment="Left"
+                            Name="addCustomerButton">Добавить заказчика</Button>
 
                     <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Заказы</TextBlock>
 
@@ -218,52 +219,56 @@
                         <TextBox x:Name="searchOrderByCustomerView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchOrderByCustomer_KeyUp"></TextBox>
                     </StackPanel>
 
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="ordersDataGrid" IsReadOnly="True" Margin="10 50 0 10">
+                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False"
+                              MinColumnWidth="50" ColumnWidth="*" Name="ordersDataGrid"
+                              IsReadOnly="True" Margin="10 50 0 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                x:Name="ordersIdColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Дата заказа"
-                                                Binding="{Binding Path=Date, StringFormat=dd/MM/yyyy}"/>
+                                                Binding="{Binding Path=Date, StringFormat=dd/MM/yyyy}"
+                                                x:Name="ordersDateColumn"/>
                             <DataGridTextColumn Header="Статус"
-                                                Binding="{Binding Path=Status}"/>
+                                                Binding="{Binding Path=Status}"
+                                                x:Name="ordersStatusColumn"/>
                             <DataGridTextColumn Header="Заказчик"
-                                                Binding="{Binding Path=CustomerEntity.Name}"/>
+                                                Binding="{Binding Path=CustomerEntity.Name}"
+                                                x:Name="ordersCustomerColumn"
+                                                Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False" x:Name="ordersButtons">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditOrderButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveOrderButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditOrderButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveOrderButton_Click"></MenuItem>
+                                <MenuItem Header="Редактировать" Click="EditOrderButton_Click" x:Name="ordersContextEdit"></MenuItem>
+                                <MenuItem Header="Удалить" Click="RemoveOrderButton_Click" x:Name="ordersContextRemove"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="10 5"
                             FontSize="14"
-                            Click="AddOrderButton_Click">Добавить заказ</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditOrderButton_Click">Изменить заказ</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveOrderButton_Click">Удалить заказ</Button>
-                    </StackPanel>
+                            Click="AddOrderButton_Click"
+                            HorizontalAlignment="Left"
+                            Name="addOrderButton">Добавить заказ</Button>
                 </Grid>
             </TabItem>
 
@@ -287,18 +292,35 @@
                         <TextBox x:Name="searchProviderByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchProviderByName_KeyUp"></TextBox>
                     </StackPanel>
 
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="providersDataGrid" IsReadOnly="True" Margin="0 50 10 10">
+                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False"
+                              MinColumnWidth="50" ColumnWidth="*" Name="providersDataGrid"
+                              IsReadOnly="True" Margin="0 50 10 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                x:Name="providersIdColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Наименование"
-                                                Binding="{Binding Path=Name}"/>
+                                                Binding="{Binding Path=Name}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Адрес"
                                                 Binding="{Binding Path=Address}"/>
                             <DataGridTextColumn Header="ИНН"
-                                                Binding="{Binding Path=ITN}"/>
+                                                Binding="{Binding Path=ITN}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Телефон"
-                                                Binding="{Binding Path=PhoneNumber}"/>
+                                                Binding="{Binding Path=PhoneNumber}"
+                                                Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditProviderButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveProviderButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
@@ -308,33 +330,18 @@
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
-
-                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="1"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="0 5"
                             FontSize="14"
-                            Click="AddProviderButton_Click">Добавить поставщика</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditProviderButton_Click">Изменить поставщика</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveProviderButton_Click">Удалить поставщика</Button>
-                    </StackPanel>
+                            Click="AddProviderButton_Click"
+                            HorizontalAlignment="Left">Добавить поставщика</Button>
 
                     <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Поставки</TextBlock>
 
@@ -343,16 +350,31 @@
                         <TextBox x:Name="searchSupplyByProviderView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchSupplyByProvider_KeyUp"></TextBox>
                     </StackPanel>
 
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="suppliesDataGrid" IsReadOnly="True" Margin="10 50 0 10">
+                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False"
+                              MinColumnWidth="50" ColumnWidth="*" Name="suppliesDataGrid"
+                              IsReadOnly="True" Margin="10 50 0 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                x:Name="suppliesIdColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Дата поставки"
                                                 Binding="{Binding Path=Date, StringFormat=dd/MM/yyyy}"/>
                             <DataGridTextColumn Header="Статус"
                                                 Binding="{Binding Path=Status}"/>
                             <DataGridTextColumn Header="Поставщик"
-                                                Binding="{Binding Path=ProviderEntity.Name}"/>
+                                                Binding="{Binding Path=ProviderEntity.Name}"
+                                                Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditSupplyButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveSupplyButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
@@ -363,32 +385,17 @@
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="10 5"
                             FontSize="14"
-                            Click="AddSupplyButton_Click">Добавить поставку</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditSupplyButton_Click">Изменить поставку</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveSupplyButton_Click">Удалить поставку</Button>
-                    </StackPanel>
+                            Click="AddSupplyButton_Click"
+                            HorizontalAlignment="Left">Добавить поставку</Button>
                 </Grid>
             </TabItem>
 
@@ -401,28 +408,43 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.8*" x:Name="productsColumn"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Продукция</TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0" x:Name="productsText">Продукция</TextBlock>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15">
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15" x:Name="productsSearch">
                         <TextBlock Text="Поиск по названию"></TextBlock>
                         <TextBox x:Name="searchProductByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchProductByName_KeyUp"></TextBox>
                     </StackPanel>
 
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Margin="0 50 10 10">
+                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False"
+                              MinColumnWidth="50" ColumnWidth="*" Name="productsDataGrid"
+                              IsReadOnly="True" Margin="0 50 10 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                x:Name="productsIdColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Название"
-                                                Binding="{Binding Path=Title}"/>
+                                                Binding="{Binding Path=Title}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Вес, кг"
                                                 Binding="{Binding Path=Weight}"/>
                             <DataGridTextColumn Header="Цена"
                                                 Binding="{Binding Path=Price}"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditProductButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveProductButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
@@ -432,33 +454,20 @@
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
-
-                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="1"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="0 5"
                             FontSize="14"
-                            Click="AddProductButton_Click">Добавить продукцию</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditProductButton_Click">Изменить продукцию</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveProductButton_Click">Удалить продукцию</Button>
-                    </StackPanel>
+                            Click="AddProductButton_Click"
+                            HorizontalAlignment="Left"
+                            Name="addProductButton">Добавить продукцию</Button>
+                        
 
                     <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Сырье</TextBlock>
 
@@ -467,54 +476,59 @@
                         <TextBox x:Name="searchRawByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchRawByName_KeyUp"></TextBox>
                     </StackPanel>
 
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*" Name="rawDataGrid" IsReadOnly="True" Margin="10 50 0 10">
+                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False"
+                              MinColumnWidth="50" ColumnWidth="*" Name="rawDataGrid"
+                              IsReadOnly="True" Margin="10 50 0 10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"/>
+                                                Binding="{Binding Path=Id}"
+                                                x:Name="rawIdColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Название"
-                                                Binding="{Binding Path=Title}"/>
+                                                Binding="{Binding Path=Title}"
+                                                x:Name="rawTitleColumn"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="Вес, кг/л"
-                                                Binding="{Binding Path=Weight}"/>
+                                                Binding="{Binding Path=Weight}"
+                                                x:Name="rawWeightColumn"/>
                             <DataGridTextColumn Header="Цена"
-                                                Binding="{Binding Path=Price}"/>
+                                                Binding="{Binding Path=Price}"
+                                                x:Name="rawPriceColumn"/>
                             <DataGridTextColumn Header="На складе"
-                                                Binding="{Binding Path=InStock}"/>
+                                                Binding="{Binding Path=InStock}"
+                                                x:Name="rawInStockColumn"/>
+                            <DataGridTemplateColumn Width="Auto" CanUserResize="False" x:Name="rawButtons">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditRawButton_Click">[E]</Button>
+                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveRawButton_Click">[X]</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
 
                         <DataGrid.ContextMenu>
-                            <ContextMenu>
+                            <ContextMenu x:Name="rawContext">
                                 <MenuItem Header="Редактировать" Click="EditRawButton_Click"></MenuItem>
                                 <MenuItem Header="Удалить" Click="RemoveRawButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button
+                    <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
                             MinWidth="50"
                             MaxWidth="200"
                             MinHeight="30"
                             MaxHeight="80"
-                            Margin="5"
+                            Margin="10 5"
                             FontSize="14"
-                            Click="AddRawButton_Click">Добавить сырье</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="EditRawButton_Click">Изменить сырье</Button>
-                        <Button
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="5"
-                            FontSize="14"
-                            Click="RemoveRawButton_Click">Удалить сырье</Button>
-                    </StackPanel>
+                            Click="AddRawButton_Click"
+                            HorizontalAlignment="Left"
+                            Name="addRawButton">Добавить сырье</Button>
                 </Grid>
             </TabItem>
         </TabControl>

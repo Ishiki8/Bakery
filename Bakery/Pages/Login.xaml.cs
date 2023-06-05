@@ -34,52 +34,67 @@ namespace bakery
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            if (LoginField.Text.Length == 0 && Password.Password.Length == 0)
+            if (LoginField.Text.Length == 0)
             {
-                wrongLogin.Text = "Введите логин!";
-                wrongPassword.Text = "Введите пароль!";
+                wrongLogin.Text = "Введите логин.";
             }
-            else
+
+            if (Password.Password.Length == 0)
             {
-                if (LoginField.Text.Length > 0)
+                wrongPassword.Text = "Введите пароль.";
+            }
+
+            if (LoginField.Text.Length > 0 && Password.Password.Length > 0)
+            {
+                bool flag = false;
+
+                foreach (User user in users)
                 {
-                    wrongLogin.Text = "";
-
-                    if (Password.Password.Length > 0)
+                    if (user.Login == LoginField.Text && user.Password == Password.Password)
                     {
-                        wrongPassword.Text = "";
-
-                        bool flag = false;
-
-                        foreach (User user in users)
-                        {
-                            if (user.Login == LoginField.Text && user.Password == Password.Password)
-                            {
-                                flag = true;
-                                mainWindow.dbUser = user.FullName;
-                                mainWindow.dbUserRole = user.RoleEntity.Title;
-                                break;
-                            }
-                        }
-
-                        if (flag)
-                        {
-                            mainWindow.OpenPage(MainWindow.pages.Menu);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Неправильный логин или пароль!");
-                        }
+                        flag = true;
+                        mainWindow.dbUser = user.FullName;
+                        mainWindow.dbUserRole = user.RoleEntity.Title;
+                        break;
                     }
-                    else
-                    {
-                        wrongPassword.Text = "Введите пароль!";
-                    }
+                }
+
+                if (flag)
+                {
+                    mainWindow.OpenPage(MainWindow.pages.Menu);
                 }
                 else
                 {
-                    wrongLogin.Text = "Введите логин!";
+                    wrongLoginOrPassword.Text = "Неправильный логин или пароль.";
                 }
+            }
+        }
+
+        private void LoginField_KeyUp(object sender, KeyEventArgs e)
+        {
+            wrongLoginOrPassword.Text = "";
+
+            if (LoginField.Text.Length == 0)
+            {
+                wrongLogin.Text = "Введите логин.";
+            }
+            else
+            {
+                wrongLogin.Text = "";
+            }    
+        }
+
+        private void Password_KeyUp(object sender, KeyEventArgs e)
+        {
+            wrongLoginOrPassword.Text = "";
+
+            if (Password.Password.Length == 0)
+            {
+                wrongPassword.Text = "Введите пароль.";
+            }
+            else
+            {
+                wrongPassword.Text = "";
             }
         }
     }

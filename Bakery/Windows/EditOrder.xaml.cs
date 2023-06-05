@@ -27,14 +27,16 @@ namespace bakery.Windows
         public static ObservableCollection<ProductToOrder> collection = null;
         public List<Ordered_Product> ordered_products;
         public int _orderId;
+        public bool _userIsBaker;
         Order _tempOrder;
-        public EditOrder(Order order, int orderId)
+        public EditOrder(Order order, int orderId, bool userIsBaker = false)
         {
             InitializeComponent();
             customerView.ItemsSource = DatabaseControl.GetCustomersForView();
 
             _orderId = orderId;
             _tempOrder = order;
+            _userIsBaker = userIsBaker;
             ordered_products = DatabaseControl.GetOrderedProductsForView().Where(p => p.OrderId == _orderId).ToList();
 
             collection = new ObservableCollection<ProductToOrder>();
@@ -58,6 +60,19 @@ namespace bakery.Windows
             }
             
             customerView.SelectedValue = order.CustomerEntity.Id;
+
+            if (_userIsBaker)
+            {
+                this.Title = "Просмотреть заказ";
+                orderEditText.Text = "Просмотр заказа";
+                editButton.Content = "Изменить статус";
+
+                dateView.IsEnabled = false;
+                customerView.IsEnabled = false;
+                arrivedStatus.Visibility = Visibility.Collapsed;
+                addProductButton.Visibility = Visibility.Collapsed;
+                removeProductButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
@@ -82,59 +97,70 @@ namespace bakery.Windows
         }
         private void EditButton_Click(Object sender, RoutedEventArgs e)
         {
-            try
+            if (_userIsBaker)
             {
-                if (String.IsNullOrEmpty(dateView.Text))
-                {
-                    throw new Exception("Не указана дата!");
-                }
-                else if (!MainWindow.TextIsDate(dateView.Text))
-                {
-                    throw new Exception("Дата введена неверно. Верный формат гггг-мм-дд!");
-                }
-                else if (DateTime.Parse(dateView.Text) > DateTime.Now)
-                {
-                    throw new Exception("Дата заказа не может превышать текущую!");
-                }
-
-                if (customerView.SelectedValue == null)
-                {
-                    throw new Exception("Не указан заказчик!");
-                }
-
-                if (collection.Count == 0)
-                {
-                    throw new Exception("Не выбран ни один вид продукции!");
-                }
-
-                _tempOrder.Date = DateTime.Parse(dateView.Text);
                 _tempOrder.Status = statusView.Text;
-                _tempOrder.CustomerId = (int)customerView.SelectedValue;
 
                 DatabaseControl.UpdateOrder(_tempOrder);
-
-                foreach (Ordered_Product product in ordered_products)
-                {
-                    DatabaseControl.RemoveProductFromOrder(product);
-                }
-
-                foreach (ProductToOrder product in collection)
-                {
-                    DatabaseControl.AddProductToOrder(new Ordered_Product
-                    {
-                        OrderId = _orderId,
-                        ProductId = product.Id,
-                        Quantity = product.Quantity
-                    });
-                }
-
                 collection.Clear();
                 Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-            }
+                try
+                {
+                    if (String.IsNullOrEmpty(dateView.Text))
+                    {
+                        throw new Exception("Не указана дата!");
+                    }
+                    else if (!MainWindow.TextIsDate(dateView.Text))
+                    {
+                        throw new Exception("Дата введена неверно. Верный формат гггг-мм-дд!");
+                    }
+                    else if (DateTime.Parse(dateView.Text) > DateTime.Now)
+                    {
+                        throw new Exception("Дата заказа не может превышать текущую!");
+                    }
+
+                    if (customerView.SelectedValue == null)
+                    {
+                        throw new Exception("Не указан заказчик!");
+                    }
+
+                    if (collection.Count == 0)
+                    {
+                        throw new Exception("Не выбран ни один вид продукции!");
+                    }
+
+                    _tempOrder.Date = DateTime.Parse(dateView.Text);
+                    _tempOrder.Status = statusView.Text;
+                    _tempOrder.CustomerId = (int)customerView.SelectedValue;
+
+                    DatabaseControl.UpdateOrder(_tempOrder);
+
+                    foreach (Ordered_Product product in ordered_products)
+                    {
+                        DatabaseControl.RemoveProductFromOrder(product);
+                    }
+
+                    foreach (ProductToOrder product in collection)
+                    {
+                        DatabaseControl.AddProductToOrder(new Ordered_Product
+                        {
+                            OrderId = _orderId,
+                            ProductId = product.Id,
+                            Quantity = product.Quantity
+                        });
+                    }
+
+                    collection.Clear();
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }  
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
