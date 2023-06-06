@@ -27,7 +27,7 @@ namespace bakery
         private string dbUser;
         private string dbUserRole;
 
-        public Menu(MainWindow _mainWindow, string _dbUser = "", string _dbUserRole = "")
+        public Menu(MainWindow _mainWindow, string _dbUser = null, string _dbUserRole = null)
         {
             InitializeComponent();
             mainWindow = _mainWindow;
@@ -37,15 +37,13 @@ namespace bakery
             dbUserView.Text = dbUser;
             dbUserRoleView.Text = dbUserRole;
 
-            if (dbUserRole == "Администратор" || dbUserRole == "Administrator")
+            if (dbUserRole == "Администратор")
             {
-                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();
-                rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
-                
+                usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView();               
             }
             else
             {
-                tabControl.Items.Remove(usersRolesTabItem);
+                tabControl.Items.Remove(usersTabItem);
 
                 customersIdColumn.Visibility = Visibility.Collapsed;
                 ordersIdColumn.Visibility = Visibility.Collapsed;
@@ -55,7 +53,7 @@ namespace bakery
                 rawIdColumn.Visibility = Visibility.Collapsed;
             }
 
-            if (dbUserRole != "Пекарь" && dbUserRole != "Baker")
+            if (dbUserRole != "Пекарь")
             {
                 customersDataGrid.ItemsSource = DatabaseControl.GetCustomersForView();
                 ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView();
@@ -116,16 +114,6 @@ namespace bakery
             window.ShowDialog();
 
             RefreshUsersTable();
-            RefreshRolesTable();
-        }
-
-        private void AddRoleButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddRole window = new AddRole();
-            window.Owner = mainWindow;
-            window.ShowDialog();
-
-            RefreshRolesTable();
         }
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
@@ -192,26 +180,6 @@ namespace bakery
                 window.Owner = mainWindow;
                 window.ShowDialog();
 
-                RefreshUsersTable();
-                RefreshRolesTable();
-            }
-            else
-            {
-                MessageBox.Show("Выберите запись для редактирования");
-            }
-        }
-
-        private void EditRoleButton_Click(Object sender, RoutedEventArgs e)
-        {
-            Role role = rolesDataGrid.SelectedItem as Role;
-            
-            if (role != null)
-            {
-                EditRole window = new EditRole(role);
-                window.Owner = mainWindow;
-                window.ShowDialog();
-
-                RefreshRolesTable();
                 RefreshUsersTable();
             }
             else
@@ -349,31 +317,13 @@ namespace bakery
             if (user != null)
             {
                 DatabaseControl.RemoveUser(user);
-
                 RefreshUsersTable();
-                RefreshRolesTable();
             }
             else
             {
                 MessageBox.Show("Выберите запись для удаления");
             }
             
-        }
-
-        private void RemoveRoleButton_Click(object sender, RoutedEventArgs e)
-        {
-            Role role = rolesDataGrid.SelectedItem as Role;
-
-            if (role != null)
-            {
-                DatabaseControl.RemoveRole(role);
-
-                RefreshRolesTable();
-            }
-            else
-            {
-                MessageBox.Show("Выберите запись для удаления");
-            }      
         }
 
         private void RemoveCustomerButton_Click(object sender, RoutedEventArgs e)
@@ -471,12 +421,6 @@ namespace bakery
             usersDataGrid.ItemsSource = null;
             usersDataGrid.ItemsSource = DatabaseControl.GetUsersForView(searchUserByFullNameView.Text);
  
-        }
-
-        public void RefreshRolesTable()
-        {
-            rolesDataGrid.ItemsSource = null;
-            rolesDataGrid.ItemsSource = DatabaseControl.GetRolesForView();
         }
 
         public void RefreshCustomersTable()

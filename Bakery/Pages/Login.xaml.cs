@@ -28,6 +28,7 @@ namespace bakery
         public Login(MainWindow _mainWindow)
         {
             InitializeComponent();
+
             mainWindow = _mainWindow;
             users = DatabaseControl.GetUsersForView();
         }
@@ -36,65 +37,41 @@ namespace bakery
         {
             if (LoginField.Text.Length == 0)
             {
-                wrongLogin.Text = "Введите логин.";
+                wrongLogin.Text = "Введите логин";
+                wrongLoginOrPassword.Text = null;
+            } 
+            else
+            {
+                wrongLogin.Text = null;
             }
 
             if (Password.Password.Length == 0)
             {
-                wrongPassword.Text = "Введите пароль.";
+                wrongPassword.Text = "Введите пароль";
+                wrongLoginOrPassword.Text = null;
+            }
+            else
+            {
+                wrongPassword.Text = null;
             }
 
             if (LoginField.Text.Length > 0 && Password.Password.Length > 0)
             {
-                bool flag = false;
+                IEnumerable<User> user = users.Where(p => p.Login == LoginField.Text && p.Password == Password.Password);
 
-                foreach (User user in users)
+                if (user.Count() > 0)
                 {
-                    if (user.Login == LoginField.Text && user.Password == Password.Password)
-                    {
-                        flag = true;
-                        mainWindow.dbUser = user.FullName;
-                        mainWindow.dbUserRole = user.RoleEntity.Title;
-                        break;
-                    }
-                }
+                    User dbUser = user.First();
 
-                if (flag)
-                {
+                    mainWindow.dbUser = dbUser.FullName;
+                    mainWindow.dbUserRole = dbUser.RoleEntity.Title;
+
                     mainWindow.OpenPage(MainWindow.pages.Menu);
                 }
                 else
                 {
-                    wrongLoginOrPassword.Text = "Неправильный логин или пароль.";
+                    wrongLoginOrPassword.Text = "Неправильный логин или пароль";
                 }
-            }
-        }
-
-        private void LoginField_KeyUp(object sender, KeyEventArgs e)
-        {
-            wrongLoginOrPassword.Text = "";
-
-            if (LoginField.Text.Length == 0)
-            {
-                wrongLogin.Text = "Введите логин.";
-            }
-            else
-            {
-                wrongLogin.Text = "";
-            }    
-        }
-
-        private void Password_KeyUp(object sender, KeyEventArgs e)
-        {
-            wrongLoginOrPassword.Text = "";
-
-            if (Password.Password.Length == 0)
-            {
-                wrongPassword.Text = "Введите пароль.";
-            }
-            else
-            {
-                wrongPassword.Text = "";
             }
         }
     }

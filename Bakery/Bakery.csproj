@@ -175,9 +175,6 @@
     <Compile Include="Windows\AddRawToSupply.xaml.cs">
       <DependentUpon>AddRawToSupply.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AddRole.xaml.cs">
-      <DependentUpon>AddRole.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\AddSupply.xaml.cs">
       <DependentUpon>AddSupply.xaml</DependentUpon>
     </Compile>
@@ -198,9 +195,6 @@
     </Compile>
     <Compile Include="Windows\EditRaw.xaml.cs">
       <DependentUpon>EditRaw.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\EditRole.xaml.cs">
-      <DependentUpon>EditRole.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditSupply.xaml.cs">
       <DependentUpon>EditSupply.xaml</DependentUpon>
@@ -263,10 +257,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AddRole.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\AddSupply.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,10 +282,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\EditRaw.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\EditRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

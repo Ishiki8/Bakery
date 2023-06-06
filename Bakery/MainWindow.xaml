@@ -10,6 +10,6 @@
         WindowState="Maximized"
         FontSize="20">
     <Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"></Frame>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Focusable="False" IsTabStop="True"></Frame>
     </Grid>
 </Window>

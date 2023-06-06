@@ -72,53 +72,6 @@ namespace bakery.Database
             }
         }
 
-        public static void AddRole(Role role)
-        {
-            using (DbAppContext ctx = new DbAppContext())
-            {
-                ctx.Role.Add(role);
-                ctx.SaveChanges();
-            }
-        }
-
-        public static void UpdateRole(Role role)
-        {
-            using (DbAppContext ctx = new DbAppContext())
-            {
-                Role _role = ctx.Role.FirstOrDefault(p => p.Id == role.Id);
-
-                if (_role == null)
-                {
-                    return;
-                }
-
-                _role.Title = role.Title;
-
-                ctx.SaveChanges();
-            }
-        }
-
-        public static void RemoveRole(Role role)
-        {
-            using (DbAppContext ctx = new DbAppContext())
-            {
-                if (role == null)
-                {
-                    return;
-                }
-
-                if (role.UserEntities.Count > 0)
-                {
-                    MessageBox.Show("Невозможно удалить роль, поскольку она используется одним или несколькими пользователями!");
-                    return;
-                }
-
-                ctx.Role.Remove(role);
-                ctx.SaveChanges();
-                
-            }
-        }
-
         public static List<Order> GetOrdersForView(string name = "")
         {
             using (DbAppContext ctx = new DbAppContext())

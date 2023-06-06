@@ -27,7 +27,7 @@
         <Button Grid.Column="1" VerticalAlignment="Bottom" Margin="10" MinWidth="40" MinHeight="40" MaxWidth="80" Click="ExitButton_Click">Выйти</Button>
 
         <TabControl Grid.Column="0" x:Name="tabControl">
-            <TabItem Header="Пользователи/Роли" x:Name="usersRolesTabItem">
+            <TabItem Header="Пользователи" x:Name="usersTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.1*"></RowDefinition>
@@ -37,7 +37,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
@@ -94,49 +93,6 @@
                             FontSize="14"
                             Click="AddUserButton_Click"
                             HorizontalAlignment="Left">Добавить пользователя</Button>
-                    
-
-                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Роли</TextBlock>
-                    <DataGrid Grid.Column="2" Grid.Row="1"
-                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
-                              Name="rolesDataGrid" IsReadOnly="True" Margin="10 50 0 10">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"
-                                                Binding="{Binding Path=Id}"
-                                                Width="Auto"/>
-                            <DataGridTextColumn Header="Название"
-                                                Binding="{Binding Path=Title}"/>
-                            <DataGridTemplateColumn Width="Auto" CanUserResize="False">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditRoleButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveRoleButton_Click">[X]</Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditRoleButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveRoleButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                    </DataGrid>
-
-                    <Button
-                            Grid.Row="2"
-                            Grid.Column="2"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="10 5"
-                            FontSize="14"
-                            Click="AddRoleButton_Click"
-                            HorizontalAlignment="Left">Добавить роль</Button>
                 </Grid>
             </TabItem>
 

@@ -1,9 +1,11 @@
 ﻿using bakery.Database;
 using bakery.Objects;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,49 +23,91 @@ namespace bakery.Windows
     /// </summary>
     public partial class AddUser : Window
     {
+        private List<String> usersLogins = new List<string>();
         public AddUser()
         {
             InitializeComponent();
             roleView.ItemsSource = DatabaseControl.GetRolesForView();
+            
+            foreach (User user in DatabaseControl.GetUsersForView())
+            {
+                usersLogins.Add(user.Login);
+            }
+
+            foreach (Role item in roleView.Items)
+            {
+                if (item.Title == "Пекарь")
+                {
+                    roleView.SelectedItem = item;
+                    break;
+                }
+            }
         }
         
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            bool isFullNameCorrect = false;
+            bool isLoginCorrect = false;
+            bool isPasswordCorrect = false;
+
+            if (String.IsNullOrEmpty(fullNameView.Text))
             {
-                if (String.IsNullOrEmpty(fullNameView.Text))
-                {
-                    throw new Exception("Не указано ФИО!");
-                }
+                wrongFullName.Text = "Введите ФИО";
+            }
+            else if (!Regex.IsMatch(fullNameView.Text, "^(?=.{1,50}$)([А-ЯЁ][а-яё]+[\\-\\s]?){3,4}$"))
+            {
+                wrongFullName.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongFullName.Text = null;
+                isFullNameCorrect = true;
+            }
 
-                if (String.IsNullOrEmpty(loginView.Text))
-                {
-                    throw new Exception("Не указан логин!");
-                }
+            if (String.IsNullOrEmpty(loginView.Text))
+            {
+                wrongLogin.Text = "Введите логин";
+            }
+            else if (!Regex.IsMatch(loginView.Text, "^(?=.{3,20}$)[a-zA-Z][a-zA-Z0-9-_\\.]"))
+            {
+                wrongLogin.Text = "Некорректный ввод";
+            }
+            else if (usersLogins.Contains(loginView.Text))
+            {
+                wrongLogin.Text = "Логин не уникален";
+            }
+            else
+            {
+                wrongLogin.Text = null;
+                isLoginCorrect = true;
+            }
 
-                if (String.IsNullOrEmpty(passwordView.Text))
-                {
-                    throw new Exception("Не указан пароль!");
-                }
+            if (String.IsNullOrEmpty(passwordView.Text))
+            {
+                wrongPassword.Text = "Введите пароль";
+            }
+            else if (!Regex.IsMatch(passwordView.Text, "^(?=.{8,30}$)[a-zA-Z0-9]"))
+            {
+                wrongPassword.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongPassword.Text = null;
+                isPasswordCorrect = true;
+            }
 
-                if (roleView.SelectedValue == null)
-                {
-                    throw new Exception("Не указана роль!");
-                }
-
+            if (isFullNameCorrect && isLoginCorrect && isPasswordCorrect)
+            {
                 DatabaseControl.AddUser(new User
                 {
-                    FullName = fullNameView.Text,
+                    FullName = fullNameView.Text.Trim(),
                     Login = loginView.Text,
                     Password = passwordView.Text,
                     RoleId = (int)roleView.SelectedValue
                 });
-                Close();
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                usersLogins.Clear();
+                Close();
             }
         }
     }

@@ -20,13 +20,13 @@
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">Авторизация</TextBlock>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="10">
-            
-            <Label Content="Логин:" Target="{Binding ElementName=LoginField}"></Label>
-            <TextBox x:Name="LoginField" KeyUp="LoginField_KeyUp"></TextBox>
+
+            <TextBlock Margin="0 0 0 5">Логин</TextBlock>
+            <TextBox x:Name="LoginField"></TextBox>
             <TextBlock x:Name="wrongLogin" Foreground="Red"></TextBlock>
  
-            <Label Content="Пароль:" Target="{Binding ElementName=Password}"></Label>
-            <PasswordBox x:Name="Password" KeyUp="Password_KeyUp"></PasswordBox>
+            <TextBlock Margin="0 0 0 5">Пароль</TextBlock>
+            <PasswordBox x:Name="Password"></PasswordBox>
             <TextBlock x:Name="wrongPassword" Foreground="Red"></TextBlock>
 
             <TextBlock x:Name="wrongLoginOrPassword" Foreground="Red" Margin="0 10 0 0" HorizontalAlignment="Center"></TextBlock>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Добавить пользователя" Height="450" Width="400"
+        Title="Добавить пользователя" Height="400" Width="400"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
@@ -19,14 +19,29 @@
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление пользователя</TextBlock>
 
-            <TextBlock Text="ФИО" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="fullNameView" Margin="10"></TextBox>
+            <TextBlock Text="ФИО" Margin="10 0 0 5"></TextBlock>
+            <TextBox x:Name="fullNameView" Margin="10 0"
+                     Style="{StaticResource placeHolder}" Tag="До 50 символов"
+                     ToolTip="Пример: Иванов Иван Иванович"></TextBox>
+            <TextBlock x:Name="wrongFullName" Margin="10 0 0 0" Foreground="Red"></TextBlock>
 
-            <TextBlock Text="Логин" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="loginView" Margin="10"></TextBox>
+            <Grid Margin="10">
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBlock Text="Логин"></TextBlock>
+                    <TextBox x:Name="loginView" Margin="0 5 0 0" Width="175"
+                             Style="{StaticResource placeHolder}" Tag="От 3 до 20 символов"
+                             ToolTip="Должен начинаться с буквы, допустимы цифры, _ и ."></TextBox>
+                    <TextBlock x:Name="wrongLogin" Foreground="Red" Width="175" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
 
-            <TextBlock Text="Пароль" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="passwordView" Margin="10"></TextBox>
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock Text="Пароль"></TextBlock>
+                    <TextBox x:Name="passwordView" Margin="0 5 0 0" Width="175"
+                             Style="{StaticResource placeHolder}" Tag="От 8 до 30 символов"
+                             ToolTip="Допустимы буквы и цифры"></TextBox>
+                    <TextBlock x:Name="wrongPassword" Foreground="Red" Width="175"></TextBlock>
+                </StackPanel>
+            </Grid>
 
             <TextBlock Text="Роль" Margin="10 0 0 0"></TextBlock>
             <ComboBox Name="roleView" Margin="10" SelectedValuePath="Id">
