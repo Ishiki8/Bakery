@@ -43,8 +43,8 @@
                 </StackPanel>
             </Grid>
 
-            <TextBlock Text="Роль" Margin="10 0 0 0"></TextBlock>
-            <ComboBox Name="roleView" Margin="10" SelectedValuePath="Id">
+            <TextBlock Text="Роль" Margin="10 0 0 5"></TextBlock>
+            <ComboBox Name="roleView" Margin="10 0" SelectedValuePath="Id">
                 <ComboBox.ItemTemplate>
                     <DataTemplate >
                         <TextBlock Text="{Binding Path=Title}"/>

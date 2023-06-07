@@ -23,18 +23,12 @@ namespace bakery.Windows
     public partial class EditUser : Window
     {
         User _tempUser;
-        private List<String> usersLogins = new List<string>();
         public EditUser(User user)
         {
             InitializeComponent();
             
             _tempUser = user;
             roleView.ItemsSource = DatabaseControl.GetRolesForView();
-
-            foreach (User dbUser in DatabaseControl.GetUsersForView())
-            {
-                usersLogins.Add(dbUser.Login);
-            }
 
             fullNameView.Text = user.FullName;
             loginView.Text = user.Login;
@@ -69,7 +63,7 @@ namespace bakery.Windows
             {
                 wrongLogin.Text = "Некорректный ввод";
             }
-            else if (loginView.Text != _tempUser.Login && usersLogins.Contains(loginView.Text))
+            else if (loginView.Text != _tempUser.Login && !DatabaseControl.isLoginUnique(loginView.Text))
             {
                 wrongLogin.Text = "Логин не уникален";
             }
@@ -103,7 +97,6 @@ namespace bakery.Windows
 
                 DatabaseControl.UpdateUser(_tempUser);
 
-                usersLogins.Clear();
                 Close();
             }
         }

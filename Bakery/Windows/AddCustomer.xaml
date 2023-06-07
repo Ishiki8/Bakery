@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Добавить заказчика" Height="450" Width="400"
+        Title="Добавить заказчика" Height="400" Width="400"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
@@ -19,17 +19,35 @@
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление заказчика</TextBlock>
 
-            <TextBlock Text="Наименование" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="nameView" Margin="10"></TextBox>
+            <TextBlock Text="Наименование" Margin="10 0 10 5"></TextBlock>
+            <TextBox x:Name="nameView" Margin="10 0 10 0"
+                     Style="{StaticResource placeHolder}" Tag="До 50 символов"
+                     ToolTip="Допустимы буквы и цифры"></TextBox>
+            <TextBlock x:Name="wrongName" Margin="10 0 0 0" Foreground="Red"></TextBlock>
 
-            <TextBlock Text="Адрес" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="addressView" Margin="10"></TextBox>
+            <TextBlock Text="Адрес" Margin="10 0 0 5"></TextBlock>
+            <TextBox x:Name="addressView" Margin="10 0"
+                     Style="{StaticResource placeHolder}" Tag="До 150 символов"
+                     ToolTip="Допустимы буквы и цифры"></TextBox>
+            <TextBlock x:Name="wrongAddress" Margin="10 0 0 0" Foreground="Red"></TextBlock>
 
-            <TextBlock Text="ИНН" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="itnView" Margin="10"></TextBox>
+            <Grid Margin="10">
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBlock Text="ИНН"></TextBlock>
+                    <TextBox x:Name="itnView" Margin="0 5 0 0" Width="175"
+                             Style="{StaticResource placeHolder}" Tag="10 или 12 цифр"
+                             ToolTip="Должен состоять из цифр"></TextBox>
+                    <TextBlock x:Name="wrongITN" Width="175" Foreground="Red"></TextBlock>
+                </StackPanel>
 
-            <TextBlock Text="Номер телефона" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="phoneView" Margin="10"></TextBox>
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock Text="Номер телефона"></TextBlock>
+                    <TextBox x:Name="phoneView" Margin="0 5 0 0" Width="175"
+                             Style="{StaticResource placeHolder}" Tag="10 цифр"
+                             ToolTip="Без кода страны (+7)"></TextBox>
+                    <TextBlock x:Name="wrongPhone" Width="175" Foreground="Red"></TextBlock>
+                </StackPanel>
+            </Grid>
         </StackPanel>
         <DockPanel Grid.Row="1">
             <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>

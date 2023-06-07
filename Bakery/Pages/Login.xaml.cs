@@ -57,14 +57,14 @@ namespace bakery
 
             if (LoginField.Text.Length > 0 && Password.Password.Length > 0)
             {
-                IEnumerable<User> user = users.Where(p => p.Login == LoginField.Text && p.Password == Password.Password);
+                User user = DatabaseControl.GetCurrentUser(LoginField.Text, Password.Password);
+                //IEnumerable<User> user = users.Where(p => p.Login == LoginField.Text && p.Password == Password.Password);
 
-                if (user.Count() > 0)
+                if (user != null)
                 {
-                    User dbUser = user.First();
 
-                    mainWindow.dbUser = dbUser.FullName;
-                    mainWindow.dbUserRole = dbUser.RoleEntity.Title;
+                    mainWindow.dbUser = user.FullName;
+                    mainWindow.dbUserRole = user.RoleEntity.Title;
 
                     mainWindow.OpenPage(MainWindow.pages.Menu);
                 }

@@ -14,6 +14,77 @@ namespace bakery.Database
 {
     public static class DatabaseControl
     {
+        public static User GetCurrentUser(string login, string password)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                return ctx.User.Where(p => p.Login == login && p.Password == password).Include(p => p.RoleEntity).FirstOrDefault();
+            }
+        }
+
+        public static bool isLoginUnique(string login)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (ctx.User.Where(p => p.Login == login).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public static bool isNameUnique(string name, string type)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (type == "customer" && ctx.Customer.Where(p => p.Name == name).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+                else if (type == "provider" && ctx.Provider.Where(p => p.Name == name).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public static bool isITNUnique(string itn, string type)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (type == "customer" && ctx.Customer.Where(p => p.ITN == itn).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+                else if (type == "provider" && ctx.Provider.Where(p => p.ITN == itn).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public static bool isPhoneUnique(string phone, string type)
+        {
+            using (DbAppContext ctx = new DbAppContext())
+            {
+                if (type == "customer" && ctx.Customer.Where(p => p.PhoneNumber == phone).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+                else if (type == "provider" && ctx.Provider.Where(p => p.PhoneNumber == phone).FirstOrDefault() != null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         public static List<User> GetUsersForView(string name = "")
         {
             using (DbAppContext ctx = new DbAppContext())

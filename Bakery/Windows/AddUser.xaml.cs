@@ -23,16 +23,10 @@ namespace bakery.Windows
     /// </summary>
     public partial class AddUser : Window
     {
-        private List<String> usersLogins = new List<string>();
         public AddUser()
         {
             InitializeComponent();
             roleView.ItemsSource = DatabaseControl.GetRolesForView();
-            
-            foreach (User user in DatabaseControl.GetUsersForView())
-            {
-                usersLogins.Add(user.Login);
-            }
 
             foreach (Role item in roleView.Items)
             {
@@ -72,7 +66,7 @@ namespace bakery.Windows
             {
                 wrongLogin.Text = "Некорректный ввод";
             }
-            else if (usersLogins.Contains(loginView.Text))
+            else if (!DatabaseControl.isLoginUnique(loginView.Text))
             {
                 wrongLogin.Text = "Логин не уникален";
             }
@@ -106,7 +100,6 @@ namespace bakery.Windows
                     RoleId = (int)roleView.SelectedValue
                 });
 
-                usersLogins.Clear();
                 Close();
             }
         }
