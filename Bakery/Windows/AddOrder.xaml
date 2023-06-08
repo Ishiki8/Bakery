@@ -12,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.15*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -23,12 +23,15 @@
             <Grid Margin="10">
                 <StackPanel HorizontalAlignment="Left">
                     <TextBlock Text="Дата"></TextBlock>
-                    <TextBox x:Name="dateView" Margin="0 10 0 0" Height="25" Width="100"></TextBox>
+                    <TextBox x:Name="dateView" Margin="0 5 0 0" Height="25" Width="100"
+                             Style="{StaticResource placeHolder}" Tag="Введите дату"
+                             ToolTip="Допустимы форматы дд.мм.гггг, дд/мм/гггг. Дата заказа не может превышать текущую"></TextBox>
+                    <TextBlock x:Name="wrongDate" Foreground="Red" Width="100" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
                 
                 <StackPanel HorizontalAlignment="Center" Margin="0 0 140 0"> 
                     <TextBlock Text="Статус"></TextBlock>
-                    <ComboBox Name="statusView" Margin="0 10 0 0" SelectedIndex="0" Width="110">
+                    <ComboBox Name="statusView" Margin="0 5 0 0" SelectedIndex="0" Width="110">
                         <TextBlock>Не оплачен</TextBlock>
                         <TextBlock>В работе</TextBlock>
                         <TextBlock>Готов</TextBlock>
@@ -38,30 +41,42 @@
 
                 <StackPanel HorizontalAlignment="Right">
                     <TextBlock Text="Заказчик"></TextBlock>
-                    <ComboBox Name="customerView" Margin="0 10 0 0" SelectedValuePath="Id" Width="240">
+                    <ComboBox Name="customerView" Margin="0 5 0 0" SelectedValuePath="Id" Width="240">
                         <ComboBox.ItemTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Path=Name}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <TextBlock x:Name="wrongCustomer" Foreground="Red" Width="240" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
             </Grid>
 
             <TextBlock Text="Состав" Margin="10 0 0 0" VerticalAlignment="Bottom"></TextBlock>
 
-            <DataGrid Margin="10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="300">
+            <DataGrid Margin="10 5 10 10" AutoGenerateColumns="False" ColumnWidth="*" Name="productsDataGrid" IsReadOnly="True" Height="300">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название"
                                         Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Количество" MaxWidth="100"
                                         Binding="{Binding Quantity}"/>
+                    <DataGridTemplateColumn Width="30" CanUserResize="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Height="20" Width="20" Margin="2 1 1 1" Click="RemoveProductButton_Click" FontSize="12">[X]</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Удалить" Click="RemoveProductButton_Click"></MenuItem>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
         </StackPanel>
         <Grid Grid.Row="1">
             <Button Margin="10 0 0 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Click="AddProductButton_Click">Добавить продукцию</Button>
-            <Button Margin="0 0 20 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Click="RemoveProductButton_Click">Удалить продукцию</Button>
             <Button Margin="0 0 10 0" Height="30" Width="auto" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Click="AddButton_Click">Добавить заказ</Button>
         </Grid>
     </Grid>

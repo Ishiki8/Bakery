@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace bakery
     {
         public string dbUser;
         public string dbUserRole;
+
+        public static string[] dateFormats =  { "dd/MM/yyyy", "dd.MM.yyyy" };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,15 +51,14 @@ namespace bakery
             }  
         }
 
-        public static bool TextIsDate(string text)
+        public static DateTime getDateFromString(string text)
         {
-            var dateFormat = "yyyy-MM-dd";
-            DateTime scheduleDate;
-            if (DateTime.TryParseExact(text, dateFormat, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out scheduleDate))
-            {
-                return true;
-            }
-            return false;
+            DateTime date;
+            var formatStrings = new String[] { "dd/MM/yyyy", "dd.MM.yyyy" };
+
+            DateTime.TryParseExact(text, formatStrings, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out date);
+
+            return date;
         }
 
     }

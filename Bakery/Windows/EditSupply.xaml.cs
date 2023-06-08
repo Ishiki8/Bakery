@@ -4,6 +4,7 @@ using bakery.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace bakery.Windows
 
             rawDataGrid.ItemsSource = collection;
 
-            dateView.Text = supply.Date.ToString("yyyy-MM-dd");
+            dateView.Text = supply.Date.ToString("dd/MM/yyyy");
 
             foreach (TextBlock item in statusView.Items)
             {
@@ -83,32 +84,39 @@ namespace bakery.Windows
         }
         private void EditButton_Click(Object sender, RoutedEventArgs e)
         {
-            try
+            DateTime date = DateTime.Now;
+            bool isDateCorrect = false;
+            bool isRawCorrect = false;
+
+            dateView.Text.Trim();
+
+            if (String.IsNullOrEmpty(dateView.Text))
             {
-                if (String.IsNullOrEmpty(dateView.Text))
-                {
-                    throw new Exception("Не указана дата!");
-                }
-                else if (!MainWindow.TextIsDate(dateView.Text))
-                {
-                    throw new Exception("Дата введена неверно. Верный формат гггг-мм-дд!");
-                }
-                else if (DateTime.Parse(dateView.Text) > DateTime.Now && statusView.Text == "Совершена")
-                {
-                    throw new Exception("Поставка не может быть совершена, поскольку дата превышает текущую!");
-                }
+                wrongDate.Text = "Введите дату";
+            }
+            else if (!DateTime.TryParseExact(dateView.Text.Trim(), MainWindow.dateFormats, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out date) ||
+                (date > DateTime.Now && statusView.Text == "Совершена"))
+            {
+                wrongDate.Text = "Некорректный ввод";
+            }
+            else
+            {
+                isDateCorrect = true;
+                wrongDate.Text = null;
+            }
 
-                if (providerView.SelectedValue == null)
-                {
-                    throw new Exception("Не указан поставщик!");
-                }
+            if (collection == null || collection.Count == 0)
+            {
+                MessageBox.Show("Выберите минимум один вид сырья");
+            }
+            else
+            {
+                isRawCorrect = true;
+            }
 
-                if (collection.Count == 0)
-                {
-                    throw new Exception("Не выбран ни один вид сырья!");
-                }
-
-                _tempSupply.Date = DateTime.Parse(dateView.Text);
+            if (isDateCorrect && isRawCorrect)
+            {
+                _tempSupply.Date = date;
                 _tempSupply.Status = statusView.Text;
                 _tempSupply.ProviderId = (int)providerView.SelectedValue;
 
@@ -129,13 +137,8 @@ namespace bakery.Windows
                     });
                 }
 
-                collection.Clear();
                 Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            }         
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

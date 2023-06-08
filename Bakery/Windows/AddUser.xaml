@@ -23,7 +23,7 @@
             <TextBox x:Name="fullNameView" Margin="10 0"
                      Style="{StaticResource placeHolder}" Tag="До 50 символов"
                      ToolTip="Пример: Иванов Иван Иванович"></TextBox>
-            <TextBlock x:Name="wrongFullName" Margin="10 0 0 0" Foreground="Red"></TextBlock>
+            <TextBlock x:Name="wrongFullName" Margin="10 0 0 0" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
             <Grid Margin="10">
                 <StackPanel HorizontalAlignment="Left">
@@ -31,7 +31,7 @@
                     <TextBox x:Name="loginView" Margin="0 5 0 0" Width="175"
                              Style="{StaticResource placeHolder}" Tag="От 3 до 20 символов"
                              ToolTip="Должен начинаться с буквы, допустимы цифры, _ и ."></TextBox>
-                    <TextBlock x:Name="wrongLogin" Foreground="Red" Width="175" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock x:Name="wrongLogin" Foreground="Red" Width="175" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
@@ -39,7 +39,7 @@
                     <TextBox x:Name="passwordView" Margin="0 5 0 0" Width="175"
                              Style="{StaticResource placeHolder}" Tag="От 8 до 30 символов"
                              ToolTip="Допустимы буквы и цифры"></TextBox>
-                    <TextBlock x:Name="wrongPassword" Foreground="Red" Width="175"></TextBlock>
+                    <TextBlock x:Name="wrongPassword" Foreground="Red" Width="175" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
             </Grid>
 

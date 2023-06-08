@@ -38,16 +38,26 @@ namespace bakery.Database
         {
             using (DbAppContext ctx = new DbAppContext())
             {
+                bool result = true;
+
                 if (type == "customer" && ctx.Customer.Where(p => p.Name == name).FirstOrDefault() != null)
                 {
-                    return false;
+                    result = false;
                 }
                 else if (type == "provider" && ctx.Provider.Where(p => p.Name == name).FirstOrDefault() != null)
                 {
-                    return false;
+                    result = false;
+                }
+                else if (type == "product" && ctx.Product.Where(p => p.Title == name).FirstOrDefault() != null)
+                {
+                    result = false;
+                }
+                else if (type == "raw" && ctx.Raw.Where(p => p.Title == name).FirstOrDefault() != null)
+                {
+                    result = false;
                 }
 
-                return true;
+                return result;
             }
         }
 

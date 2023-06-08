@@ -58,7 +58,6 @@ namespace bakery
             if (LoginField.Text.Length > 0 && Password.Password.Length > 0)
             {
                 User user = DatabaseControl.GetCurrentUser(LoginField.Text, Password.Password);
-                //IEnumerable<User> user = users.Where(p => p.Login == LoginField.Text && p.Password == Password.Password);
 
                 if (user != null)
                 {

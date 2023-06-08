@@ -44,6 +44,10 @@ namespace bakery.Windows
             bool isLoginCorrect = false;
             bool isPasswordCorrect = false;
 
+            fullNameView.Text.Trim();
+            loginView.Text.Trim();
+            passwordView.Text.Trim();
+
             if (String.IsNullOrEmpty(fullNameView.Text))
             {
                 wrongFullName.Text = "Введите ФИО";
@@ -94,7 +98,7 @@ namespace bakery.Windows
             {
                 DatabaseControl.AddUser(new User
                 {
-                    FullName = fullNameView.Text.Trim(),
+                    FullName = fullNameView.Text,
                     Login = loginView.Text,
                     Password = passwordView.Text,
                     RoleId = (int)roleView.SelectedValue

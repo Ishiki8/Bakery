@@ -42,6 +42,11 @@ namespace bakery.Windows
             bool isITNCorrect = false;
             bool isPhoneCorrect = false;
 
+            nameView.Text.Trim();
+            addressView.Text.Trim();
+            itnView.Text.Trim();
+            phoneView.Text.Trim();
+
             if (String.IsNullOrEmpty(nameView.Text))
             {
                 wrongName.Text = "Введите наименование";
@@ -112,8 +117,8 @@ namespace bakery.Windows
 
             if (isNameCorrect && isAddressCorrect && isITNCorrect && isPhoneCorrect)
             {
-                _tempProvider.Name = nameView.Text.Trim();
-                _tempProvider.Address = addressView.Text.Trim();
+                _tempProvider.Name = nameView.Text;
+                _tempProvider.Address = addressView.Text;
                 _tempProvider.ITN = itnView.Text;
                 _tempProvider.PhoneNumber = phoneView.Text;
 

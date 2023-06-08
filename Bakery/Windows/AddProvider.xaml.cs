@@ -34,6 +34,11 @@ namespace bakery.Windows
             bool isITNCorrect = false;
             bool isPhoneCorrect = false;
 
+            nameView.Text.Trim();
+            addressView.Text.Trim();
+            itnView.Text.Trim();
+            phoneView.Text.Trim();
+
             if (String.IsNullOrEmpty(nameView.Text))
             {
                 wrongName.Text = "Введите наименование";
@@ -106,8 +111,8 @@ namespace bakery.Windows
             {
                 DatabaseControl.AddProvider(new Provider
                 {
-                    Name = nameView.Text.Trim(),
-                    Address = addressView.Text.Trim(),
+                    Name = nameView.Text,
+                    Address = addressView.Text,
                     ITN = itnView.Text,
                     PhoneNumber = phoneView.Text
                 });

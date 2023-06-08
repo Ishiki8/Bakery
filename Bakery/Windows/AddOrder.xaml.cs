@@ -1,6 +1,7 @@
 ﻿using bakery.Classes;
 using bakery.Database;
 using bakery.Objects;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace bakery.Windows
 {
@@ -28,39 +30,82 @@ namespace bakery.Windows
         public AddOrder()
         {
             InitializeComponent();
+
+            collection = new ObservableCollection<ProductToOrder>();
+
+            productsDataGrid.ItemsSource = collection;
             customerView.ItemsSource = DatabaseControl.GetCustomersForView();
+        }
+
+        private void AddProductButton_Click(Object sender, RoutedEventArgs e)
+        {
+            AddProductToOrder window = new AddProductToOrder();
+            window.Owner = this;
+            window.ShowDialog();
+        }
+
+        private void RemoveProductButton_Click(Object sender, RoutedEventArgs e)
+        {
+            ProductToOrder product = productsDataGrid.SelectedItem as ProductToOrder;
+
+            if (product != null)
+            {
+                collection.Remove(product);
+            }
+            else
+            {
+                MessageBox.Show("Выберите запись для удаления");
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            DateTime date = DateTime.Now;
+            bool isDateCorrect = false;
+            bool isCustomerCorrect = false;
+            bool isProductsCorrect = false;
+
+            dateView.Text.Trim();
+
+            if (String.IsNullOrEmpty(dateView.Text))
             {
-                if (String.IsNullOrEmpty(dateView.Text))
-                {
-                    throw new Exception("Не указана дата!");
-                }
-                else if (!MainWindow.TextIsDate(dateView.Text))
-                {
-                    throw new Exception("Дата введена неверно. Верный формат гггг-мм-дд!");
-                }
-                else if (DateTime.Parse(dateView.Text) > DateTime.Now)
-                {
-                    throw new Exception("Дата заказа не может превышать текущую!");
-                }
+                wrongDate.Text = "Введите дату";
+            }
+            else if (!DateTime.TryParseExact(dateView.Text.Trim(), MainWindow.dateFormats, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out date) ||
+                date > DateTime.Now)
+            {
+                wrongDate.Text = "Некорректный ввод";
+            }
+            else
+            {
+                isDateCorrect = true;
+                wrongDate.Text = null;
+            }
 
-                if (customerView.SelectedValue == null)
-                {
-                    throw new Exception("Не указан заказчик!");
-                }
+            if (customerView.SelectedValue == null)
+            {
+                wrongCustomer.Text = "Выберите заказчика";
+            }
+            else
+            {
+                isCustomerCorrect = true;
+                wrongCustomer.Text = null;
+            }
 
-                if (collection.Count == 0)
-                {
-                    throw new Exception("Не выбран ни один вид продукции!");
-                }
+            if (collection == null || collection.Count == 0)
+            {
+                MessageBox.Show("Выберите минимум один вид продукции");
+            }
+            else
+            {
+                isProductsCorrect = true;
+            }
 
+            if (isDateCorrect && isCustomerCorrect && isProductsCorrect)
+            {
                 DatabaseControl.AddOrder(new Order
                 {
-                    Date = DateTime.Parse(dateView.Text),
+                    Date = date,
                     Status = statusView.Text,
                     CustomerId = (int)customerView.SelectedValue,
                 });
@@ -76,32 +121,10 @@ namespace bakery.Windows
                         Quantity = product.Quantity
                     });
                 }
+
                 Close();
-
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void AddProductButton_Click(Object sender, RoutedEventArgs e)
-        {
-            if (collection == null)
-            {
-                collection = new ObservableCollection<ProductToOrder>();
-                productsDataGrid.ItemsSource = collection;
-            }
-
-            AddProductToOrder window = new AddProductToOrder();
-            window.Owner = this;
-            window.ShowDialog();
-        }
-        private void RemoveProductButton_Click(Object sender, RoutedEventArgs e)
-        {
-            ProductToOrder product = productsDataGrid.SelectedItem as ProductToOrder;
-            collection.Remove(product);
-        }
+        }     
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

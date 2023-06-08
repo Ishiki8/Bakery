@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace bakery.Windows
         public int _orderId;
         public bool _userIsBaker;
         Order _tempOrder;
+
         public EditOrder(Order order, int orderId, bool userIsBaker = false)
         {
             InitializeComponent();
@@ -48,7 +50,7 @@ namespace bakery.Windows
 
             productsDataGrid.ItemsSource = collection;
 
-            dateView.Text = order.Date.ToString("yyyy-MM-dd");
+            dateView.Text = order.Date.ToString("dd/MM/yyyy");
 
             foreach (TextBlock item in statusView.Items)
             {
@@ -71,7 +73,8 @@ namespace bakery.Windows
                 customerView.IsEnabled = false;
                 arrivedStatus.Visibility = Visibility.Collapsed;
                 addProductButton.Visibility = Visibility.Collapsed;
-                removeProductButton.Visibility = Visibility.Collapsed;
+                productsContext.Visibility = Visibility.Collapsed;
+                buttonColumn.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -95,6 +98,7 @@ namespace bakery.Windows
                 MessageBox.Show("Выберите запись для удаления");
             }
         }
+
         private void EditButton_Click(Object sender, RoutedEventArgs e)
         {
             if (_userIsBaker)
@@ -107,32 +111,39 @@ namespace bakery.Windows
             }
             else
             {
-                try
+                DateTime date = DateTime.Now;
+                bool isDateCorrect = false;
+                bool isProductsCorrect = false;
+
+                dateView.Text.Trim();
+
+                if (String.IsNullOrEmpty(dateView.Text))
                 {
-                    if (String.IsNullOrEmpty(dateView.Text))
-                    {
-                        throw new Exception("Не указана дата!");
-                    }
-                    else if (!MainWindow.TextIsDate(dateView.Text))
-                    {
-                        throw new Exception("Дата введена неверно. Верный формат гггг-мм-дд!");
-                    }
-                    else if (DateTime.Parse(dateView.Text) > DateTime.Now)
-                    {
-                        throw new Exception("Дата заказа не может превышать текущую!");
-                    }
+                    wrongDate.Text = "Введите дату";
+                }
+                else if (!DateTime.TryParseExact(dateView.Text.Trim(), MainWindow.dateFormats, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out date) ||
+                    date > DateTime.Now)
+                {
+                    wrongDate.Text = "Некорректный ввод";
+                }
+                else
+                {
+                    isDateCorrect = true;
+                    wrongDate.Text = null;
+                }
 
-                    if (customerView.SelectedValue == null)
-                    {
-                        throw new Exception("Не указан заказчик!");
-                    }
+                if (collection == null || collection.Count == 0)
+                {
+                    MessageBox.Show("Выберите минимум один вид продукции");
+                }
+                else
+                {
+                    isProductsCorrect = true;
+                }
 
-                    if (collection.Count == 0)
-                    {
-                        throw new Exception("Не выбран ни один вид продукции!");
-                    }
-
-                    _tempOrder.Date = DateTime.Parse(dateView.Text);
+                if (isDateCorrect && isProductsCorrect)
+                {
+                    _tempOrder.Date = date;
                     _tempOrder.Status = statusView.Text;
                     _tempOrder.CustomerId = (int)customerView.SelectedValue;
 
@@ -153,12 +164,7 @@ namespace bakery.Windows
                         });
                     }
 
-                    collection.Clear();
                     Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
                 }
             }  
         }
