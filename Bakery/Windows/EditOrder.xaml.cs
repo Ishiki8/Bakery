@@ -80,7 +80,7 @@ namespace bakery.Windows
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            AddProductToOrder window = new AddProductToOrder();
+            AddProductToOrder window = new AddProductToOrder("edit");
             window.Owner = this;
             window.ShowDialog();
         }

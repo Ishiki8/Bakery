@@ -64,7 +64,7 @@ namespace bakery.Windows
 
         private void AddRawButton_Click(object sender, RoutedEventArgs e)
         {
-            AddRawToSupply window = new AddRawToSupply();
+            AddRawToSupply window = new AddRawToSupply("edit");
             window.Owner = this;
             window.ShowDialog();
         }

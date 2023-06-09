@@ -48,40 +48,69 @@ namespace bakery.Windows
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            bool isTitleCorrect = false;
+            bool isWeightCorrect = false;
+            bool isPriceCorrect = false;
+
+            decimal weight = 0;
+            decimal price = 0;
+
+            titleView.Text.Trim();
+            weightView.Text.Trim();
+            priceView.Text.Trim();
+
+            if (String.IsNullOrEmpty(titleView.Text))
             {
-                if (String.IsNullOrEmpty(titleView.Text))
-                {
-                    throw new Exception("Не указано название!");
-                }
+                wrongTitle.Text = "Введите название";
+            }
+            else if (titleView.Text != _tempRaw.Title && !DatabaseControl.isNameUnique(titleView.Text, "raw"))
+            {
+                wrongTitle.Text = "Название не уникально";
+            }
+            else if (titleView.Text.Length > 50)
+            {
+                wrongTitle.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongTitle.Text = null;
+                isTitleCorrect = true;
+            }
 
-                if (String.IsNullOrEmpty(weightView.Text))
-                {
-                    throw new Exception("Не указан вес!");
-                }
+            if (String.IsNullOrEmpty(weightView.Text))
+            {
+                wrongWeight.Text = "Введите вес";
+            }
+            else if (!decimal.TryParse(weightView.Text, out weight) || weight == 0 || weight > 99.99M)
+            {
+                wrongWeight.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongWeight.Text = null;
+                isWeightCorrect = true;
+            }
 
-                if (String.IsNullOrEmpty(priceView.Text))
-                {
-                    throw new Exception("Не указана цена!");
-                }
+            if (String.IsNullOrEmpty(priceView.Text))
+            {
+                wrongPrice.Text = "Введите цену";
+            }
+            else if (!decimal.TryParse(priceView.Text, out price) || price == 0 || price > 99999.99M)
+            {
+                wrongPrice.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongPrice.Text = null;
+                isPriceCorrect = true;
+            }
 
-                decimal weight;
-                decimal price;
-
-                if (!decimal.TryParse(weightView.Text, out weight))
-                {
-                    throw new Exception("Вес должен быть числом!");
-                }
-
-                if (!decimal.TryParse(priceView.Text, out price))
-                {
-                    throw new Exception("Цена должна быть числом!");
-                }
-
+            if (isTitleCorrect && isWeightCorrect && isPriceCorrect)
+            {
                 _tempRaw.Title = titleView.Text;
                 _tempRaw.Weight = weight;
                 _tempRaw.Price = price;
-                
+
                 if (inStockView.IsChecked == true)
                 {
                     _tempRaw.InStock = "Есть";
@@ -96,12 +125,8 @@ namespace bakery.Windows
                 }
 
                 DatabaseControl.UpdateRaw(_tempRaw);
-                Close();
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                Close();
             }
         }
     }

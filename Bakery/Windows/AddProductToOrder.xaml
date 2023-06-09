@@ -11,7 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -19,21 +19,25 @@
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление продукции в заказ</TextBlock>
 
-            <TextBlock Text="Продукция" Margin="10 0 0 0"></TextBlock>
-            <ComboBox Name="productView" Margin="10" SelectedValuePath="Id">
+            <TextBlock Text="Продукция" Margin="10 0 0 5"></TextBlock>
+            <ComboBox Name="productView" Margin="10 0" SelectedValuePath="Id">
                 <ComboBox.ItemTemplate>
                     <DataTemplate >
                         <TextBlock Text="{Binding Path=Title}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <TextBlock x:Name="wrongProduct" Margin="10 0 0 5" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <TextBlock Text="Количество" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="quantityView" Margin="10"></TextBox>
+            <TextBlock Text="Количество" Margin="10 0 0 5"></TextBlock>
+            <TextBox x:Name="quantityView" Margin="10 0"
+                     Style="{StaticResource placeHolder}" Tag="Введите число"
+                     ToolTip="Должно быть целым числом"></TextBox>
+            <TextBlock x:Name="wrongQuantity" Margin="10 0" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
             
         </StackPanel>
         <DockPanel Grid.Row="1">
-            <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
+            <Button Margin="10" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
         </DockPanel>
     </Grid>
 </Window>

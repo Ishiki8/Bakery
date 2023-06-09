@@ -39,7 +39,7 @@ namespace bakery.Windows
 
         private void AddProductButton_Click(Object sender, RoutedEventArgs e)
         {
-            AddProductToOrder window = new AddProductToOrder();
+            AddProductToOrder window = new AddProductToOrder("add");
             window.Owner = this;
             window.ShowDialog();
         }

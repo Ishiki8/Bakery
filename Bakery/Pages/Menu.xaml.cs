@@ -127,6 +127,18 @@ namespace bakery
 
         private void AddOrderButton_Click(object sender, RoutedEventArgs e)
         {
+            if (DatabaseControl.GetCustomersForView().Count == 0)
+            {
+                MessageBox.Show("Добавьте минимум одного заказчика");
+                return;
+            }
+
+            if (DatabaseControl.GetProductsForView().Count == 0)
+            {
+                MessageBox.Show("Добавьте минимум один вид продукции");
+                return;
+            }
+
             AddOrder window = new AddOrder();
             window.Owner = mainWindow;
             window.ShowDialog();
@@ -154,6 +166,18 @@ namespace bakery
 
         private void AddSupplyButton_Click(object sender, RoutedEventArgs e)
         {
+            if (DatabaseControl.GetProvidersForView().Count == 0)
+            {
+                MessageBox.Show("Добавьте минимум одного поставщика");
+                return;
+            }
+
+            if (DatabaseControl.GetRawForView().Count == 0)
+            {
+                MessageBox.Show("Добавьте минимум один вид сырья");
+                return;
+            }
+
             AddSupply window = new AddSupply();
             window.Owner = mainWindow;
             window.ShowDialog();
@@ -294,6 +318,11 @@ namespace bakery
 
         private void EditRawButton_Click(Object sender, RoutedEventArgs e)
         {
+            if (dbUserRole == "Пекарь")
+            {
+                return;
+            }
+
             Raw raw = rawDataGrid.SelectedItem as Raw;
 
             if (raw != null)
@@ -317,7 +346,7 @@ namespace bakery
             if (user != null)
             {
                 DatabaseControl.RemoveUser(user);
-                RefreshUsersTable();
+                RefreshUsersTable();  
             }
             else
             {

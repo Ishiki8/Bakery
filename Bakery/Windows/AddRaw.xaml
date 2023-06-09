@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Добавить сырье" Height="450" Width="400"
+        Title="Добавить сырье" Height="350" Width="350"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -19,19 +19,33 @@
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление сырья</TextBlock>
 
-            <TextBlock Text="Название" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="titleView" Margin="10"></TextBox>
+            <TextBlock Text="Название" Margin="10 0 0 5"></TextBlock>
+            <TextBox x:Name="titleView" Margin="10 0"
+                     Style="{StaticResource placeHolder}" Tag="До 50 символов"
+                     ToolTip="Должно быть уникально"></TextBox>
+            <TextBlock x:Name="wrongTitle" Foreground="Red" Margin="10 0" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <TextBlock Text="Вес, кг/л" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="weightView" Margin="10"></TextBox>
+            <Grid Margin="10">
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBlock Text="Вес, кг"></TextBlock>
+                    <TextBox x:Name="weightView" Margin="0 5 0 0" Width="150"
+                             Style="{StaticResource placeHolder}" Tag="От 0.01 до 99.99"
+                             ToolTip="Может быть указан целым числом"></TextBox>
+                    <TextBlock x:Name="wrongWeight" Foreground="Red" Width="150" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
+                </StackPanel>
 
-            <TextBlock Text="Цена" Margin="10 0 0 0"></TextBlock>
-            <TextBox x:Name="priceView" Margin="10"></TextBox>
-
-            <CheckBox x:Name="inStockView" Content="На складе" Margin="10" IsThreeState="True" IsChecked="{x:Null}"></CheckBox>
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock Text="Цена"></TextBlock>
+                    <TextBox x:Name="priceView" Margin="0 5 0 0" Width="150"
+                             Style="{StaticResource placeHolder}" Tag="От 0.01 до 99999.99"
+                             ToolTip="Может быть указана целым числом"></TextBox>
+                    <TextBlock x:Name="wrongPrice" Foreground="Red" Width="150" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <CheckBox x:Name="inStockView" Content="На складе" Margin="10 5 0 0" IsThreeState="True" IsChecked="{x:Null}"></CheckBox>
         </StackPanel>
         <DockPanel Grid.Row="1">
-            <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
+            <Button Margin="10" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
         </DockPanel>
     </Grid>
 </Window>

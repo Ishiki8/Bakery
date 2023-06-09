@@ -24,13 +24,16 @@ namespace bakery
     public partial class Login : Page
     {
         public MainWindow mainWindow;
-        public List<User> users;
         public Login(MainWindow _mainWindow)
         {
             InitializeComponent();
-
             mainWindow = _mainWindow;
-            users = DatabaseControl.GetUsersForView();
+
+            if (DatabaseControl.GetUsersForView().Count == 0)
+            {
+                MessageBox.Show("В базе данных отсутствуют пользователи. Обратитесь к системному администратору");
+                mainWindow.Close();
+            }
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)

@@ -3,6 +3,7 @@ using bakery.Database;
 using bakery.Objects;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,72 +23,92 @@ namespace bakery.Windows
     /// </summary>
     public partial class AddRawToSupply : Window
     {
-        public AddRawToSupply()
+        private ObservableCollection<RawToSupply> _collection;
+        private string _mode;
+        public AddRawToSupply(string mode = "add")
         {
             InitializeComponent();
             rawView.ItemsSource = DatabaseControl.GetRawForView();
+            _mode = mode;
+
+            if (_mode == "add")
+            {
+                _collection = AddSupply.collection;
+            }
+            else
+            {
+                _collection = EditSupply.collection;
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            bool isRawCorrect = false;
+            bool isQuantityCorrect = false;
+            int quantity = 0;
+
+            quantityView.Text.Trim();
+
+            if (rawView.SelectedValue == null)
             {
-                if (rawView.SelectedValue == null)
-                {
-                    throw new Exception("Выберите сырье!");
-                }
+                wrongRaw.Text = "Выберите сырье";
+            }
+            else
+            {
+                wrongRaw.Text = null;
+                isRawCorrect = true;
+            }
 
-                int quantity;
+            if (String.IsNullOrEmpty(quantityView.Text))
+            {
+                wrongQuantity.Text = "Введите количество";
+            }
+            else if (!int.TryParse(quantityView.Text, out quantity) || quantity == 0)
+            {
+                wrongQuantity.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongQuantity.Text = null;
+                isQuantityCorrect = true;
+            }
 
-                if (String.IsNullOrEmpty(quantityView.Text))
-                {
-                    throw new Exception("Введите количество!");
-                }
-                else if (!int.TryParse(quantityView.Text, out quantity))
-                {
-                    throw new Exception("Количество должно быть числом!");
-                }
-
-                RawToSupply rawToSupply = new RawToSupply()
+            if (isRawCorrect && isQuantityCorrect)
+            {
+                RawToSupply rawSupply = new RawToSupply()
                 {
                     Name = (rawView.SelectedItem as Raw).Title,
                     Quantity = quantity,
                     Id = (int)rawView.SelectedValue
                 };
 
-                if (!(AddSupply.collection == null))
-                {
-                    foreach (RawToSupply raw in AddSupply.collection)
-                    {
-                        if (raw.Name == rawToSupply.Name)
-                        {
-                            throw new Exception("Этот вид сырья уже есть в поставке!");
-                        }
-                    }
+                bool isRawInSupply = false;
 
-                    AddSupply.collection.Add(rawToSupply);
-                }
-                
-                if (!(EditSupply.collection == null))
+                foreach (RawToSupply raw in _collection)
                 {
-                    foreach (RawToSupply raw in EditSupply.collection)
+                    if (raw.Name == rawSupply.Name)
                     {
-                        if (raw.Name == rawToSupply.Name)
-                        {
-                            throw new Exception("Этот вид сырья уже есть в поставке!");
-                        }
+                        isRawInSupply = true;
+                        MessageBox.Show("Этот вид сырья уже есть в поставке");
+                        break;
                     }
-
-                    EditSupply.collection.Add(rawToSupply);
                 }
 
-                Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+                if (!isRawInSupply)
+                {
+                    switch (_mode)
+                    {
+                        case "add":
+                            AddSupply.collection.Add(rawSupply);
+                            break;
 
+                        case "edit":
+                            EditSupply.collection.Add(rawSupply);
+                            break;
+                    }
+                    Close();
+                }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using bakery.Database;
 using bakery.Objects;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,68 +23,91 @@ namespace bakery.Windows
     /// </summary>
     public partial class AddProductToOrder : Window
     {
-        public AddProductToOrder()
+        private ObservableCollection<ProductToOrder> _collection;
+        private string _mode;
+        public AddProductToOrder(string mode = "add")
         {
             InitializeComponent();
             productView.ItemsSource = DatabaseControl.GetProductsForView();
+            _mode = mode;
+
+            if (_mode == "add")
+            {
+                _collection = AddOrder.collection;
+            }
+            else
+            {
+                _collection = EditOrder.collection;
+            }
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            bool isProductCorrect = false;
+            bool isQuantityCorrect = false;
+            int quantity = 0;
+
+            quantityView.Text.Trim();
+
+            if (productView.SelectedValue == null)
             {
-                if (productView.SelectedValue == null)
-                {
-                    throw new Exception("Выберите продукцию!");
-                }
-
-                int quantity;
-
-                if (String.IsNullOrEmpty(quantityView.Text))
-                {
-                    throw new Exception("Введите количество!");
-                }
-                else if (!int.TryParse(quantityView.Text, out quantity))
-                {
-                    throw new Exception("Количество должно быть числом!");
-                }
-
-                ProductToOrder productsOrder = new ProductToOrder() { Name = (productView.SelectedItem as Product).Title, 
-                                                                    Quantity = quantity, 
-                                                                    Id = (int)productView.SelectedValue };
-
-                if (!(AddOrder.collection == null))
-                {
-                    foreach (ProductToOrder order in AddOrder.collection)
-                    {
-                        if (order.Name == productsOrder.Name)
-                        {
-                            throw new Exception("Этот вид продукции уже есть в заказе!");
-                        }
-                    }
-
-                    AddOrder.collection.Add(productsOrder);
-                }
-                
-                if (!(EditOrder.collection == null))
-                {
-                    foreach (ProductToOrder order in EditOrder.collection)
-                    {
-                        if (order.Name == productsOrder.Name)
-                        {
-                            throw new Exception("Этот вид продукции уже есть в заказе!");
-                        }
-                    }
-
-                    EditOrder.collection.Add(productsOrder);
-                }
-
-                Close();
-            } 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                wrongProduct.Text = "Выберите продукцию";
             }
-            
+            else
+            {
+                wrongProduct.Text = null;
+                isProductCorrect = true;
+            }
+
+            if (String.IsNullOrEmpty(quantityView.Text))
+            {
+                wrongQuantity.Text = "Введите количество";
+            }
+            else if (!int.TryParse(quantityView.Text, out quantity) || quantity == 0)
+            {
+                wrongQuantity.Text = "Некорректный ввод";
+            }
+            else
+            {
+                wrongQuantity.Text = null;
+                isQuantityCorrect = true;
+            }
+
+            if (isProductCorrect && isQuantityCorrect)
+            {
+                ProductToOrder productsOrder = new ProductToOrder()
+                {
+                    Name = (productView.SelectedItem as Product).Title,
+                    Quantity = quantity,
+                    Id = (int)productView.SelectedValue
+                };
+
+                bool isProductInOrder = false;
+
+                foreach (ProductToOrder product in _collection)
+                {
+                    if (product.Name == productsOrder.Name)
+                    {
+                        isProductInOrder = true;
+                        MessageBox.Show("Этот вид продукции уже есть в заказе");
+                        break;
+                    }
+                }
+
+                if (!isProductInOrder)
+                {
+                    switch (_mode)
+                    {
+                        case "add":
+                            AddOrder.collection.Add(productsOrder);
+                            break;
+
+                        case "edit":
+                            EditOrder.collection.Add(productsOrder);
+                            break;
+                    }
+                    Close();
+                }
+            } 
         }
     }
 }

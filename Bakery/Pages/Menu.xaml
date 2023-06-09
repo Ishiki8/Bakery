@@ -80,6 +80,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveUserButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="EditUserButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
 
                     <Button
@@ -153,6 +159,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveCustomerButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="EditCustomerButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
                     
                     <Button
@@ -211,6 +223,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveOrderButton_Click" x:Name="ordersContextRemove"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="EditOrderButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
 
                     <Button
@@ -285,6 +303,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveProviderButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="EditProviderButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
                     
                     <Button
@@ -339,6 +363,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveSupplyButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="EditSupplyButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
 
                     <Button
@@ -409,6 +439,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveProductButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="MouseDoubleClick" Handler="EditProductButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
                     
                     <Button
@@ -471,6 +507,12 @@
                                 <MenuItem Header="Удалить" Click="RemoveRawButton_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
+
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow" >
+                                <EventSetter Event="MouseDoubleClick" Handler="EditRawButton_Click"></EventSetter>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
 
                     <Button
