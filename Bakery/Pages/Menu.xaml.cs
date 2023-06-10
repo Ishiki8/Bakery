@@ -27,10 +27,14 @@ namespace bakery
         private string dbUser;
         private string dbUserRole;
 
-
         public Menu(MainWindow _mainWindow, string _dbUser = null, string _dbUserRole = null)
         {
             InitializeComponent();
+
+            #if DEBUG
+                System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
+            #endif
+
             mainWindow = _mainWindow;
             dbUser = _dbUser;
             dbUserRole = _dbUserRole;
@@ -45,13 +49,6 @@ namespace bakery
             else
             {
                 tabControl.Items.Remove(usersTabItem);
-
-                customersIdColumn.Visibility = Visibility.Collapsed;
-                ordersIdColumn.Visibility = Visibility.Collapsed;
-                providersIdColumn.Visibility = Visibility.Collapsed;
-                suppliesIdColumn.Visibility = Visibility.Collapsed;
-                productsIdColumn.Visibility = Visibility.Collapsed;
-                rawIdColumn.Visibility = Visibility.Collapsed;
             }
 
             if (dbUserRole != "Пекарь")
@@ -63,39 +60,26 @@ namespace bakery
             }
             else
             {
-                customersOrdersTabItem.Header = "Заказы";
-                customersDataGrid.Visibility = Visibility.Collapsed;
-                customersText.Visibility = Visibility.Collapsed;
-                customersSearch.Visibility = Visibility.Collapsed;
-                addCustomerButton.Visibility = Visibility.Collapsed;
-                customersColumn.Width = new GridLength(0);
+                tabControl.Items.Remove(customersTabItem);
+                tabControl.Items.Remove(providersTabItem);
+                tabControl.Items.Remove(suppliesTabItem);
+                tabControl.Items.Remove(productsTabItem);
 
-                ordersContextEdit.Header = "Подробнее";
-                ordersContextRemove.Visibility = Visibility.Collapsed;
-                addOrderButton.Visibility = Visibility.Collapsed;
-                ordersButtons.Visibility = Visibility.Collapsed;
-                ordersDateColumn.Width = DataGridLength.Auto;
-                ordersStatusColumn.Width = DataGridLength.Auto;
-                ordersCustomerColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                //customersTabItem.Visibility = Visibility.Collapsed;
+                //providersTabItem.Visibility = Visibility.Collapsed;
+                //suppliesTabItem.Visibility = Visibility.Collapsed;
+                //productsTabItem.Visibility = Visibility.Collapsed;
 
                 ordersDataGrid.ItemsSource = DatabaseControl.GetOrdersForView().Where(p => p.Status != "Доставлен");
                 
-                providersSuppliesTabItem.Visibility = Visibility.Collapsed;
+                addOrderButton.Visibility = Visibility.Collapsed;
+                ordersCustomersColumn.Visibility = Visibility.Collapsed;
 
-                productsRawTabItem.Header = "Сырье";
-                productsDataGrid.Visibility = Visibility.Collapsed;
-                productsText.Visibility = Visibility.Collapsed;
-                productsSearch.Visibility = Visibility.Collapsed;
-                addProductButton.Visibility = Visibility.Collapsed;
-                productsColumn.Width = new GridLength(0);
+                orderButtons.CellTemplate = (DataTemplate)ordersGrid.Resources["bakerOrderButtons"];
 
                 addRawButton.Visibility = Visibility.Collapsed;
                 rawPriceColumn.Visibility = Visibility.Collapsed;
-                rawContext.Visibility = Visibility.Collapsed;
                 rawButtons.Visibility = Visibility.Collapsed;
-                rawTitleColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-                rawWeightColumn.Width = DataGridLength.Auto;
-                rawInStockColumn.Width = DataGridLength.Auto;
             }
             
             productsDataGrid.ItemsSource = DatabaseControl.GetProductsForView();

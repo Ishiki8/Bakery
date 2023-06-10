@@ -20,17 +20,7 @@
             <ColumnDefinition Width="210"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
-        <!--<StackPanel Grid.Column="1" Margin="10 20">
-            <TextBlock FontWeight="UltraBold">Пользователь:</TextBlock>
-            <TextBlock TextWrapping="Wrap" x:Name="dbUserView"></TextBlock>
-
-            <TextBlock FontWeight="UltraBold">Роль:</TextBlock>
-            <TextBlock TextWrapping="Wrap" x:Name="dbUserRoleView"></TextBlock>
-        </StackPanel>-->
-
-        <!--<Button Grid.Column="1" VerticalAlignment="Bottom" Margin="10" MinWidth="40" MinHeight="40" MaxWidth="80" Click="ExitButton_Click">Выйти</Button>-->
-
+        
         <Border Grid.Column="0" CornerRadius="0 50 50 0" Background="Orange"></Border>
 
         <DockPanel Grid.Column="0">
@@ -42,7 +32,7 @@
                         FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Medium"
                         TextAlignment="Center" DockPanel.Dock="Top"></TextBlock>
 
-            <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="5 0 5 20" Click="ExitButton_Click">
+            <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="5 0 5 25" Click="ExitButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
                     <TextBlock Text="Выйти из системы"/>
@@ -63,8 +53,15 @@
                     <TextBlock Grid.Row="0" Text="Пользователи" FontSize="32" FontWeight="SemiBold"
                                Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
 
+                    <Button Click="AddUserButton_Click" Style="{StaticResource addButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить пользователя"/>
+                        </StackPanel>
+                    </Button>
+
                     <TextBlock Text="Поиск по ФИО" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    
+
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
                            Panel.ZIndex="1" Text="Начните вводить ..."
@@ -73,18 +70,7 @@
                         <TextBox x:Name="searchUserByFullNameView" Style="{StaticResource searchTextBox}" KeyUp="SearchUserByFullName_KeyUp"/>
                     </Grid>
 
-                    <!--<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15">
-                        <TextBlock Text="Поиск по ФИО"></TextBlock>
-                        <TextBox x:Name="searchUserByFullNameView" Style="{StaticResource placeHolder}" Tag="Введите что-то" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchUserByFullName_KeyUp"></TextBox>
-                    </StackPanel>-->
-
-                    <Button Click="AddUserButton_Click" Style="{StaticResource addButton}">
-                        <StackPanel Orientation="Horizontal">
-                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
-                            <TextBlock Text="Добавить пользователя"/>
-                        </StackPanel>
-                    </Button>
-
+                    
                     <DataGrid Grid.Column="1" Grid.Row="2"
                               AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
                               Name="usersDataGrid" IsReadOnly="True"
@@ -95,40 +81,40 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="ФИО"
                                                 Binding="{Binding Path=FullName}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Логин"
-                                                Binding="{Binding Path=Login}"/>
+                                                Binding="{Binding Path=Login}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Пароль"
-                                                Binding="{Binding Path=Password}"/>
+                                                Binding="{Binding Path=Password}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Роль"
-                                                Binding="{Binding Path=RoleEntity.Title}"/>
+                                                Binding="{Binding Path=RoleEntity.Title}"
+                                                Width="*"/>
+
                             <DataGridTemplateColumn Width="Auto" CanUserResize="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <!--<Button Height="20" Width="20" Margin="1 2 2 2" Click="EditUserButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveUserButton_Click">[X]</Button>-->
                                             <Button Style="{StaticResource gridEditButton}" Click="EditUserButton_Click">
                                                 <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
                                             </Button>
                                             <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveUserButton_Click">
-                                                <icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                                <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
                                             </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditUserButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveUserButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
@@ -139,63 +125,78 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Заказчики/Заказы" x:Name="customersOrdersTabItem" Style="{DynamicResource TabItemStyle}">
-                <Grid>
+            <TabItem Header="Заказчики" x:Name="customersTabItem" Style="{DynamicResource TabItemStyle}">
+                <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.1*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="0.1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="*" x:Name="customersColumn"></ColumnDefinition>
-                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0" x:Name="customersText">Заказчики</TextBlock>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15" x:Name="customersSearch">
-                        <TextBlock Text="Поиск по наименованию"></TextBlock>
-                        <TextBox x:Name="searchCustomerByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchCustomerByName_KeyUp"></TextBox>
-                    </StackPanel>
+                    <TextBlock Grid.Row="0" Text="Заказчики" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
 
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False"
-                              MinColumnWidth="50" ColumnWidth="*" Name="customersDataGrid"
-                              IsReadOnly="True" Margin="0 50 10 10">
+                    <Button Click="AddCustomerButton_Click" Style="{StaticResource addButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить заказчика"/>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="Поиск по наименованию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                    <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
+                        <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Начните вводить ..."
+                           Visibility="{Binding ElementName=searchCustomerByNameView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+                        <TextBox x:Name="searchCustomerByNameView" Style="{StaticResource searchTextBox}" KeyUp="SearchCustomerByName_KeyUp"/>
+                    </Grid>
+
+                    <DataGrid Grid.Column="1" Grid.Row="2"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="customersDataGrid" IsReadOnly="True"
+                              RowStyle="{DynamicResource DataGridRowStyle1}"
+		                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+		                      CellStyle="{DynamicResource DataGridCellStyle1}"
+		                      Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                x:Name="customersIdColumn"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="Наименование"
                                                 Binding="{Binding Path=Name}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Адрес"
-                                                Binding="{Binding Path=Address}"/>
+                                                Binding="{Binding Path=Address}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="ИНН"
                                                 Binding="{Binding Path=ITN}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Телефон"
                                                 Binding="{Binding Path=PhoneNumber}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTemplateColumn Width="Auto" CanUserResize="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditCustomerButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveCustomerButton_Click">[X]</Button>
+                                            <Button Style="{StaticResource gridEditButton}" Click="EditCustomerButton_Click">
+                                                <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+                                            <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveCustomerButton_Click">
+                                                <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditCustomerButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveCustomerButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
@@ -203,63 +204,90 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
-                    
-                    <Button
-                            Grid.Row="2" 
-                            Grid.Column="1"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="0 5"
-                            FontSize="14"
-                            Click="AddCustomerButton_Click"
-                            HorizontalAlignment="Left"
-                            Name="addCustomerButton">Добавить заказчика</Button>
+                </Grid>
+            </TabItem>
 
-                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Заказы</TextBlock>
+            <TabItem Header="Заказы" x:Name="ordersTabItem" Style="{DynamicResource TabItemStyle}">
+                <Grid Margin="0 0 10 10" x:Name="ordersGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top" Margin="15 15">
-                        <TextBlock Text="Поиск по заказчику"></TextBlock>
-                        <TextBox x:Name="searchOrderByCustomerView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchOrderByCustomer_KeyUp"></TextBox>
-                    </StackPanel>
+                    <Grid.Resources>
+                        <DataTemplate x:Key="defaultOrderButtons">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditOrderButton_Click">
+                                    <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveOrderButton_Click" x:Name="removeOrderButton">
+                                    <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
 
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False"
-                              MinColumnWidth="50" ColumnWidth="*" Name="ordersDataGrid"
-                              IsReadOnly="True" Margin="10 50 0 10">
+                        <DataTemplate x:Key="bakerOrderButtons">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditOrderButton_Click">
+                                    <icon:PackIconMaterial Kind="Details" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Grid.Resources>
+
+                    <TextBlock Grid.Row="0" Text="Заказы" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+
+                    <Button Click="AddOrderButton_Click" Style="{StaticResource addButton}" x:Name="addOrderButton">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить заказ"/>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="Поиск по заказчику" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                    <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
+                        <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Начните вводить ..."
+                           Visibility="{Binding ElementName=searchOrderByCustomerView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+                        <TextBox x:Name="searchOrderByCustomerView" Style="{StaticResource searchTextBox}" KeyUp="SearchOrderByCustomer_KeyUp"/>
+                    </Grid>
+
+                    <DataGrid Grid.Column="1" Grid.Row="2"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="ordersDataGrid" IsReadOnly="True"
+                              RowStyle="{DynamicResource DataGridRowStyle1}"
+		                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+		                      CellStyle="{DynamicResource DataGridCellStyle1}"
+		                      Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                x:Name="ordersIdColumn"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="Дата заказа"
                                                 Binding="{Binding Path=Date, StringFormat=dd/MM/yyyy}"
-                                                x:Name="ordersDateColumn"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Статус"
                                                 Binding="{Binding Path=Status}"
-                                                x:Name="ordersStatusColumn"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Заказчик"
                                                 Binding="{Binding Path=CustomerEntity.Name}"
-                                                x:Name="ordersCustomerColumn"
-                                                Width="Auto"/>
-                            <DataGridTemplateColumn Width="Auto" CanUserResize="False" x:Name="ordersButtons">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditOrderButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveOrderButton_Click">[X]</Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
+                                                Width="*"
+                                                x:Name="ordersCustomersColumn"/>
 
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditOrderButton_Click" x:Name="ordersContextEdit"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveOrderButton_Click" x:Name="ordersContextRemove"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
+
+                            <DataGridTemplateColumn Width="Auto"
+                                                    CanUserResize="False"
+                                                    x:Name="orderButtons"
+                                                    CellTemplate="{StaticResource defaultOrderButtons}"/>
+                        </DataGrid.Columns>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
@@ -267,79 +295,81 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
-
-                    <Button
-                            Grid.Row="2"
-                            Grid.Column="2"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="10 5"
-                            FontSize="14"
-                            Click="AddOrderButton_Click"
-                            HorizontalAlignment="Left"
-                            Name="addOrderButton">Добавить заказ</Button>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Поставщики/Поставки" x:Name="providersSuppliesTabItem" Style="{DynamicResource TabItemStyle}">
-                <Grid>
+            <TabItem Header="Поставщики" x:Name="providersTabItem" Style="{DynamicResource TabItemStyle}">
+                <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.1*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="0.1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Поставщики</TextBlock>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15">
-                        <TextBlock Text="Поиск по наименованию"></TextBlock>
-                        <TextBox x:Name="searchProviderByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchProviderByName_KeyUp"></TextBox>
-                    </StackPanel>
+                    <TextBlock Grid.Row="0" Text="Поставщики" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
 
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False"
-                              MinColumnWidth="50" ColumnWidth="*" Name="providersDataGrid"
-                              IsReadOnly="True" Margin="0 50 10 10">
+                    <Button Click="AddProviderButton_Click" Style="{StaticResource addButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить поставщика"/>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="Поиск по наименованию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                    <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
+                        <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Начните вводить ..."
+                           Visibility="{Binding ElementName=searchProviderByNameView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+                        <TextBox x:Name="searchProviderByNameView" Style="{StaticResource searchTextBox}" KeyUp="SearchProviderByName_KeyUp"/>
+                    </Grid>
+
+                    <DataGrid Grid.Column="1" Grid.Row="2"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="providersDataGrid" IsReadOnly="True"
+                              RowStyle="{DynamicResource DataGridRowStyle1}"
+		                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+		                      CellStyle="{DynamicResource DataGridCellStyle1}"
+		                      Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                x:Name="providersIdColumn"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="Наименование"
                                                 Binding="{Binding Path=Name}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Адрес"
-                                                Binding="{Binding Path=Address}"/>
+                                                Binding="{Binding Path=Address}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="ИНН"
                                                 Binding="{Binding Path=ITN}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Телефон"
                                                 Binding="{Binding Path=PhoneNumber}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTemplateColumn Width="Auto" CanUserResize="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditProviderButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveProviderButton_Click">[X]</Button>
+                                            <Button Style="{StaticResource gridEditButton}" Click="EditProviderButton_Click">
+                                                <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+                                            <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveProviderButton_Click">
+                                                <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditProviderButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveProviderButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
@@ -347,59 +377,77 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
-                    
-                    <Button
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="0 5"
-                            FontSize="14"
-                            Click="AddProviderButton_Click"
-                            HorizontalAlignment="Left">Добавить поставщика</Button>
+                </Grid>
+            </TabItem>
 
-                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Поставки</TextBlock>
+            <TabItem Header="Поставки" x:Name="suppliesTabItem" Style="{DynamicResource TabItemStyle}">
+                <Grid Margin="0 0 10 10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top" Margin="15 15">
-                        <TextBlock Text="Поиск по поставщику"></TextBlock>
-                        <TextBox x:Name="searchSupplyByProviderView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchSupplyByProvider_KeyUp"></TextBox>
-                    </StackPanel>
+                    <TextBlock Grid.Row="0" Text="Поставки" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
 
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False"
-                              MinColumnWidth="50" ColumnWidth="*" Name="suppliesDataGrid"
-                              IsReadOnly="True" Margin="10 50 0 10">
+                    <Button Click="AddSupplyButton_Click" Style="{StaticResource addButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить поставку"/>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="Поиск по поставщику" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                    <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
+                        <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Начните вводить ..."
+                           Visibility="{Binding ElementName=searchSupplyByProviderView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+                        <TextBox x:Name="searchSupplyByProviderView" Style="{StaticResource searchTextBox}" KeyUp="SearchSupplyByProvider_KeyUp"/>
+                    </Grid>
+
+                    <DataGrid Grid.Column="1" Grid.Row="2"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="suppliesDataGrid" IsReadOnly="True"
+                              RowStyle="{DynamicResource DataGridRowStyle1}"
+		                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+		                      CellStyle="{DynamicResource DataGridCellStyle1}"
+		                      Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                x:Name="suppliesIdColumn"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="Дата поставки"
-                                                Binding="{Binding Path=Date, StringFormat=dd/MM/yyyy}"/>
+                                                Binding="{Binding Path=Date, StringFormat=dd/MM/yyyy}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Статус"
-                                                Binding="{Binding Path=Status}"/>
+                                                Binding="{Binding Path=Status}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Поставщик"
                                                 Binding="{Binding Path=ProviderEntity.Name}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTemplateColumn Width="Auto" CanUserResize="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditSupplyButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveSupplyButton_Click">[X]</Button>
+                                            <Button Style="{StaticResource gridEditButton}" Click="EditSupplyButton_Click">
+                                                <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+                                            <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveSupplyButton_Click">
+                                                <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditSupplyButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveSupplyButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
@@ -407,75 +455,77 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
-
-                    <Button
-                            Grid.Row="2"
-                            Grid.Column="2"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="10 5"
-                            FontSize="14"
-                            Click="AddSupplyButton_Click"
-                            HorizontalAlignment="Left">Добавить поставку</Button>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Продукция/Сырье" x:Name="productsRawTabItem" Style="{DynamicResource TabItemStyle}">
-                <Grid>
+            <TabItem Header="Продукция" x:Name="productsTabItem" Style="{DynamicResource TabItemStyle}">
+                <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.1*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="0.1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.8*" x:Name="productsColumn"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0" x:Name="productsText">Продукция</TextBlock>
+                    <TextBlock Grid.Row="0" Text="Продукция" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 15" x:Name="productsSearch">
-                        <TextBlock Text="Поиск по названию"></TextBlock>
-                        <TextBox x:Name="searchProductByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchProductByName_KeyUp"></TextBox>
-                    </StackPanel>
+                    <Button Click="AddProductButton_Click" Style="{StaticResource addButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить продукцию"/>
+                        </StackPanel>
+                    </Button>
 
-                    <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False"
-                              MinColumnWidth="50" ColumnWidth="*" Name="productsDataGrid"
-                              IsReadOnly="True" Margin="0 50 10 10">
+                    <TextBlock Text="Поиск по названию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                    <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
+                        <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Начните вводить ..."
+                           Visibility="{Binding ElementName=searchProductByNameView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+                        <TextBox x:Name="searchProductByNameView" Style="{StaticResource searchTextBox}" KeyUp="SearchProductByName_KeyUp"/>
+                    </Grid>
+
+                    <DataGrid Grid.Column="1" Grid.Row="2"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="productsDataGrid" IsReadOnly="True"
+                              RowStyle="{DynamicResource DataGridRowStyle1}"
+		                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+		                      CellStyle="{DynamicResource DataGridCellStyle1}"
+		                      Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                x:Name="productsIdColumn"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="Название"
                                                 Binding="{Binding Path=Title}"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Вес, кг"
-                                                Binding="{Binding Path=Weight}"/>
+                                                Binding="{Binding Path=Weight}"
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Цена"
-                                                Binding="{Binding Path=Price}"/>
+                                                Binding="{Binding Path=Price}"
+                                                Width="*"/>
+
                             <DataGridTemplateColumn Width="Auto" CanUserResize="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditProductButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveProductButton_Click">[X]</Button>
+                                            <Button Style="{StaticResource gridEditButton}" Click="EditProductButton_Click">
+                                                <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+                                            <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveProductButton_Click">
+                                                <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Редактировать" Click="EditProductButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveProductButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow">
@@ -483,67 +533,82 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
-                    
-                    <Button
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="0 5"
-                            FontSize="14"
-                            Click="AddProductButton_Click"
-                            HorizontalAlignment="Left"
-                            Name="addProductButton">Добавить продукцию</Button>
-                        
+                </Grid>
+            </TabItem>
 
-                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 7 0 0">Сырье</TextBlock>
+            <TabItem Header="Сырье" x:Name="rawTabItem" Style="{DynamicResource TabItemStyle}">
+                <Grid Margin="0 0 10 10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top" Margin="15 15">
-                        <TextBlock Text="Поиск по названию"></TextBlock>
-                        <TextBox x:Name="searchRawByNameView" MaxHeight="20" MinWidth="100" MaxWidth="200" Margin="10 0 0 0" KeyUp="SearchRawByName_KeyUp"></TextBox>
-                    </StackPanel>
+                    <TextBlock Grid.Row="0" Text="Сырье" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
 
-                    <DataGrid Grid.Column="2" Grid.Row="1" AutoGenerateColumns="False"
-                              MinColumnWidth="50" ColumnWidth="*" Name="rawDataGrid"
-                              IsReadOnly="True" Margin="10 50 0 10">
+                    <Button Click="AddRawButton_Click" Style="{StaticResource addButton}" x:Name="addRawButton">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                            <TextBlock Text="Добавить сырье"/>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="Поиск по названию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+                    <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
+                        <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Начните вводить ..."
+                           Visibility="{Binding ElementName=searchRawByNameView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+                        <TextBox x:Name="searchRawByNameView" Style="{StaticResource searchTextBox}" KeyUp="SearchRawByName_KeyUp"/>
+                    </Grid>
+
+                    <DataGrid Grid.Column="1" Grid.Row="2"
+                              AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
+                              Name="rawDataGrid" IsReadOnly="True"
+                              RowStyle="{DynamicResource DataGridRowStyle1}"
+		                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+		                      CellStyle="{DynamicResource DataGridCellStyle1}"
+		                      Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
                                                 Binding="{Binding Path=Id}"
-                                                x:Name="rawIdColumn"
-                                                Width="Auto"/>
+                                                Width="Auto"
+                                                CanUserResize="False"/>
+
                             <DataGridTextColumn Header="Название"
                                                 Binding="{Binding Path=Title}"
-                                                x:Name="rawTitleColumn"
-                                                Width="Auto"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Вес, кг/л"
                                                 Binding="{Binding Path=Weight}"
-                                                x:Name="rawWeightColumn"/>
+                                                Width="*"/>
+
                             <DataGridTextColumn Header="Цена"
                                                 Binding="{Binding Path=Price}"
+                                                Width="*"
                                                 x:Name="rawPriceColumn"/>
+
                             <DataGridTextColumn Header="На складе"
                                                 Binding="{Binding Path=InStock}"
-                                                x:Name="rawInStockColumn"/>
+                                                Width="*"/>
+
                             <DataGridTemplateColumn Width="Auto" CanUserResize="False" x:Name="rawButtons">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Height="20" Width="20" Margin="1 2 2 2" Click="EditRawButton_Click">[E]</Button>
-                                            <Button Height="20" Width="20" Margin="2 2 1 2" Click="RemoveRawButton_Click">[X]</Button>
+                                            <Button Style="{StaticResource gridEditButton}" Click="EditRawButton_Click">
+                                                <icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+                                            <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="RemoveRawButton_Click">
+                                                <icon:PackIconMaterial Kind="TrashCanOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu x:Name="rawContext">
-                                <MenuItem Header="Редактировать" Click="EditRawButton_Click"></MenuItem>
-                                <MenuItem Header="Удалить" Click="RemoveRawButton_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
 
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRow" >
@@ -551,19 +616,6 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
-
-                    <Button
-                            Grid.Row="2"
-                            Grid.Column="2"
-                            MinWidth="50"
-                            MaxWidth="200"
-                            MinHeight="30"
-                            MaxHeight="80"
-                            Margin="10 5"
-                            FontSize="14"
-                            Click="AddRawButton_Click"
-                            HorizontalAlignment="Left"
-                            Name="addRawButton">Добавить сырье</Button>
                 </Grid>
             </TabItem>
         </TabControl>
