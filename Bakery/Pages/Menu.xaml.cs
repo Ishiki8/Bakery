@@ -27,6 +27,7 @@ namespace bakery
         private string dbUser;
         private string dbUserRole;
 
+
         public Menu(MainWindow _mainWindow, string _dbUser = null, string _dbUserRole = null)
         {
             InitializeComponent();
