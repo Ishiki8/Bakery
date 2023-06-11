@@ -11,11 +11,11 @@
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="Menu">
 
-    <Page.Resources>
+    <!--<Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-    </Page.Resources>
+    </Page.Resources>-->
     
-    <Grid Background="{DynamicResource SecundaryGrayColor}">
+    <Grid Background="{StaticResource SecundaryGrayColor}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="210"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -25,11 +25,11 @@
 
         <DockPanel Grid.Column="0">
             <TextBlock  TextWrapping="WrapWithOverflow" x:Name="dbUserView" Grid.Column="0"
-                        FontSize="20" Margin="5 15 5 0" Foreground="{DynamicResource SecundaryTextColor}" FontWeight="SemiBold"
+                        FontSize="20" Margin="5 15 5 0" Foreground="{StaticResource SecundaryTextColor}" FontWeight="SemiBold"
                         TextAlignment="Center" DockPanel.Dock="Top"></TextBlock>
 
             <TextBlock  TextWrapping="WrapWithOverflow" x:Name="dbUserRoleView" Grid.Column="0"
-                        FontSize="16" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Medium"
+                        FontSize="16" Foreground="{StaticResource PrimaryTextColor}" FontWeight="Medium"
                         TextAlignment="Center" DockPanel.Dock="Top"></TextBlock>
 
             <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="5 0 5 25" Click="ExitButton_Click">
@@ -39,10 +39,10 @@
                 </StackPanel>
             </Button>
         </DockPanel>
-        
 
-        <TabControl Grid.Column="0" Grid.ColumnSpan="2" x:Name="tabControl" Style="{DynamicResource TabControlStyle}">
-            <TabItem Header="Пользователи" x:Name="usersTabItem" Style="{DynamicResource TabItemStyle}">
+
+        <TabControl Grid.Column="0" Grid.ColumnSpan="2" x:Name="tabControl" Style="{StaticResource TabControlStyle}">
+            <TabItem Header="Пользователи" x:Name="usersTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -50,17 +50,17 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Пользователи" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Пользователи" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddUserButton_Click" Style="{StaticResource addButton}">
+                    <Button Click="AddUserButton_Click" Style="{StaticResource defaultButton}">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить пользователя"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по ФИО" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по ФИО" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -70,7 +70,7 @@
                         <TextBox x:Name="searchUserByFullNameView" Style="{StaticResource searchTextBox}" KeyUp="SearchUserByFullName_KeyUp"/>
                     </Grid>
 
-                    
+
                     <DataGrid Grid.Column="1" Grid.Row="2"
                               AutoGenerateColumns="False" MinColumnWidth="50" ColumnWidth="*"
                               Name="usersDataGrid" IsReadOnly="True"
@@ -115,17 +115,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="EditUserButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Заказчики" x:Name="customersTabItem" Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="Заказчики" x:Name="customersTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -133,17 +127,17 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Заказчики" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Заказчики" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddCustomerButton_Click" Style="{StaticResource addButton}">
+                    <Button Click="AddCustomerButton_Click" Style="{StaticResource defaultButton}">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить заказчика"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по наименованию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по наименованию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -197,17 +191,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="EditCustomerButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Заказы" x:Name="ordersTabItem" Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="Заказы" x:Name="ordersTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10" x:Name="ordersGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -236,17 +224,17 @@
                         </DataTemplate>
                     </Grid.Resources>
 
-                    <TextBlock Grid.Row="0" Text="Заказы" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Заказы" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddOrderButton_Click" Style="{StaticResource addButton}" x:Name="addOrderButton">
+                    <Button Click="AddOrderButton_Click" Style="{StaticResource defaultButton}" x:Name="addOrderButton">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить заказ"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по заказчику" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по заказчику" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -288,17 +276,11 @@
                                                     x:Name="orderButtons"
                                                     CellTemplate="{StaticResource defaultOrderButtons}"/>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="EditOrderButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Поставщики" x:Name="providersTabItem" Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="Поставщики" x:Name="providersTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -306,17 +288,17 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Поставщики" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Поставщики" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddProviderButton_Click" Style="{StaticResource addButton}">
+                    <Button Click="AddProviderButton_Click" Style="{StaticResource defaultButton}">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить поставщика"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по наименованию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по наименованию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -370,17 +352,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="EditProviderButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Поставки" x:Name="suppliesTabItem" Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="Поставки" x:Name="suppliesTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -388,17 +364,17 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Поставки" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Поставки" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddSupplyButton_Click" Style="{StaticResource addButton}">
+                    <Button Click="AddSupplyButton_Click" Style="{StaticResource defaultButton}">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить поставку"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по поставщику" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по поставщику" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -448,17 +424,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="EditSupplyButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Продукция" x:Name="productsTabItem" Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="Продукция" x:Name="productsTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -466,17 +436,17 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Продукция" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Продукция" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddProductButton_Click" Style="{StaticResource addButton}">
+                    <Button Click="AddProductButton_Click" Style="{StaticResource defaultButton}">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить продукцию"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по названию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по названию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -526,17 +496,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow">
-                                <EventSetter Event="MouseDoubleClick" Handler="EditProductButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Сырье" x:Name="rawTabItem" Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="Сырье" x:Name="rawTabItem" Style="{StaticResource TabItemStyle}">
                 <Grid Margin="0 0 10 10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -544,17 +508,17 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Сырье" FontSize="32" FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Left" Margin="0 20 0 0"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Сырье" FontSize="32" FontWeight="SemiBold"
+                               Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Left"></TextBlock>
 
-                    <Button Click="AddRawButton_Click" Style="{StaticResource addButton}" x:Name="addRawButton">
+                    <Button Click="AddRawButton_Click" Style="{StaticResource defaultButton}" x:Name="addRawButton">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
                             <TextBlock Text="Добавить сырье"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Поиск по названию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBlock Text="Поиск по названию" Grid.Row="1" FontSize="13" FontWeight="SemiBold" Margin="0 0 205 0" Foreground="{StaticResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                     <Grid Width="200" HorizontalAlignment="Right" Grid.Row="1">
                         <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -609,12 +573,6 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
-
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRow" >
-                                <EventSetter Event="MouseDoubleClick" Handler="EditRawButton_Click"></EventSetter>
-                            </Style>
-                        </DataGrid.Resources>
                     </DataGrid>
                 </Grid>
             </TabItem>

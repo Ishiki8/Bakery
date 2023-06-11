@@ -8,6 +8,27 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="PrimaryAppColor" Color="Orange"/>
+                    <SolidColorBrush x:Key="SecundaryAppColor" Color="#FFBF00"/>
+
+                    <SolidColorBrush x:Key="PrimaryGrayColor" Color="#EBEAEF"/>
+                    <SolidColorBrush x:Key="SecundaryGrayColor" Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="TertiaryGrayColor" Color="#EAEAEA"/>
+                    <SolidColorBrush x:Key="QuaternaryGrayColor" Color="#D3D3D3"/>
+
+                    <SolidColorBrush x:Key="BorderBrush" Color="#FFFFFF"/>
+
+                    <SolidColorBrush x:Key="PrimaryTextColor" Color="#232323"/>
+                    <SolidColorBrush x:Key="SecundaryTextColor" Color="#FFFFFF"/>
+
+                    <SolidColorBrush x:Key="PrimaryBlueColor" Color="#14BDE3"/>
+                    <SolidColorBrush x:Key="SecundaryBlueColor" Color="#1467E3"/>
+                </ResourceDictionary>
+                
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TabControlStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/DataGridStyles.xaml"/>

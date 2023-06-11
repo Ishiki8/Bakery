@@ -2,24 +2,25 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:local="clr-namespace:bakery"
       mc:Ignorable="d" 
       Height="auto" Width="auto"
       MaxHeight="450" MaxWidth="400"
-      d:DesignHeight="450" d:DesignWidth="400"
+      d:DesignHeight="450" d:DesignWidth="400" Background="White"
       Title="Login">
 
     <Grid>
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="0.2*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
 
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">Авторизация</TextBlock>
+        <!--<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">Авторизация</TextBlock>-->
 
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="10">
+        <!--<StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="10">
 
             <TextBlock Margin="0 0 0 5">Логин</TextBlock>
             <TextBox x:Name="LoginField"></TextBox>
@@ -30,7 +31,59 @@
             <TextBlock x:Name="wrongPassword" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
             <TextBlock x:Name="wrongLoginOrPassword" Foreground="Red" Margin="0 10 0 0" HorizontalAlignment="Center" ></TextBlock>
+        </StackPanel>-->
+        <!--<Button Grid.Row="2" MaxWidth="100" MaxHeight="50" MinWidth="75" MinHeight="40" Click="Login_Click" IsDefault="True">Войти</Button>-->
+
+        <StackPanel Orientation="Vertical">
+            <Image Source="../Images/bakery_logo.png" Width="120" Height="120"/>
+
+            <TextBlock Margin="0 50 0 5" Foreground="{StaticResource PrimaryTextColor}">Логин</TextBlock>
+            <TextBox x:Name="LoginField" Style="{StaticResource defaultTextBox}">
+                <TextBox.Background>
+                    <ImageBrush ImageSource="{icon:MaterialImage Kind=AccountOutline}" Stretch="None" AlignmentX="Left"/>
+                </TextBox.Background>
+            </TextBox>
+            <TextBlock x:Name="wrongLogin" Foreground="Red" FontSize="10" Margin="0 0 0 5" TextWrapping="WrapWithOverflow"></TextBlock>
+
+            <TextBlock Margin="0 0 0 5" Foreground="{StaticResource PrimaryTextColor}">Пароль</TextBlock>
+            <PasswordBox x:Name="Password"
+                         BorderThickness="0, 0, 0, 1"
+                         Height="25"
+                         VerticalContentAlignment="Center"
+                         Padding="25, 0, 0, 0">
+                <PasswordBox.Background>
+                    <ImageBrush ImageSource="{icon:MaterialImage Kind=KeyOutline}" Stretch="None" AlignmentX="Left"/>
+                </PasswordBox.Background>
+                <PasswordBox.Style>
+                    <Style TargetType="PasswordBox">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource SecundaryAppColor}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsFocused" Value="true">
+                                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryAppColor}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </PasswordBox.Style>
+            </PasswordBox>
+            <TextBlock x:Name="wrongPassword" Foreground="Red" FontSize="10" Margin="0 0 0 5" TextWrapping="WrapWithOverflow"></TextBlock>
+
+            <TextBlock x:Name="wrongLoginOrPassword" Foreground="Red" Margin="0 50 0 0" HorizontalAlignment="Center"></TextBlock>
+
+            <Button Click="Login_Click" IsDefault="True" Style="{StaticResource defaultButton}" HorizontalAlignment="Center">Войти</Button>
         </StackPanel>
-        <Button Grid.Row="2" MaxWidth="100" MaxHeight="50" MinWidth="75" MinHeight="40" Click="Login_Click" IsDefault="True">Войти</Button>
     </Grid>
 </Page>

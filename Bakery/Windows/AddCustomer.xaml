@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Добавить заказчика" Height="400" Width="400"
+        Height="420" Width="400"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
@@ -17,40 +18,73 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление заказчика</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 20 20 40" FontSize="20">Добавление заказчика</TextBlock>
 
             <TextBlock Text="Наименование" Margin="10 0 10 5"></TextBlock>
-            <TextBox x:Name="nameView" Margin="10 0 10 0"
-                     Style="{StaticResource placeHolder}" Tag="До 50 символов"
-                     ToolTip="Допустимы буквы и цифры"></TextBox>
-            <TextBlock x:Name="wrongName" Margin="10 0 0 0" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <TextBlock Text="Адрес" Margin="10 0 0 5"></TextBlock>
-            <TextBox x:Name="addressView" Margin="10 0"
-                     Style="{StaticResource placeHolder}" Tag="До 150 символов"
+            <Grid Margin="10 0">
+                <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="До 50 символов"
+                           Visibility="{Binding ElementName=nameView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                <TextBox x:Name="nameView" Padding="0"
+                     Style="{StaticResource defaultTextBox}"
                      ToolTip="Допустимы буквы и цифры"></TextBox>
-            <TextBlock x:Name="wrongAddress" Margin="10 0 0 0" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
+            </Grid>
+            
+            <TextBlock x:Name="wrongName" Margin="10 0 10 10" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <Grid Margin="10">
+            <TextBlock Text="Адрес" Margin="10 0 10 5"></TextBlock>
+
+            <Grid Margin="10 0">
+                <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="До 150 символов"
+                           Visibility="{Binding ElementName=addressView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                <TextBox x:Name="addressView" Padding="0"
+                     Style="{StaticResource defaultTextBox}"
+                     ToolTip="Допустимы буквы и цифры"></TextBox>
+            </Grid>
+            
+            <TextBlock x:Name="wrongAddress" Margin="10 0 10 10" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
+
+            <Grid Margin="10 0">
                 <StackPanel HorizontalAlignment="Left">
                     <TextBlock Text="ИНН"></TextBlock>
-                    <TextBox x:Name="itnView" Margin="0 5 0 0" Width="175"
-                             Style="{StaticResource placeHolder}" Tag="10 или 12 цифр"
+
+                    <Grid>
+                        <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="10 или 12 цифр"
+                           Visibility="{Binding ElementName=itnView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                        <TextBox x:Name="itnView" Margin="0 5 0 0" Padding="0" Width="175"
+                             Style="{StaticResource defaultTextBox}"
                              ToolTip="Должен состоять из цифр"></TextBox>
+                    </Grid>
+                    
                     <TextBlock x:Name="wrongITN" Width="175" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
                     <TextBlock Text="Номер телефона"></TextBlock>
-                    <TextBox x:Name="phoneView" Margin="0 5 0 0" Width="175"
-                             Style="{StaticResource placeHolder}" Tag="10 цифр"
+
+                    <Grid>
+                        <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="10 цифр"
+                           Visibility="{Binding ElementName=phoneView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                        <TextBox x:Name="phoneView" Margin="0 5 0 0" Padding="0" Width="175"
+                             Style="{StaticResource defaultTextBox}"
                              ToolTip="Без кода страны (+7)"></TextBox>
+                    </Grid>
+                    
                     <TextBlock x:Name="wrongPhone" Width="175" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
             </Grid>
         </StackPanel>
         <DockPanel Grid.Row="1">
-            <Button Margin="20" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
+            <Button Style="{StaticResource defaultButton}" HorizontalAlignment="Center" Width="110" Margin="0" Click="AddButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                    <TextBlock Text="Добавить"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
     </Grid>
 </Window>
