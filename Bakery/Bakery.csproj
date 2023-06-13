@@ -363,12 +363,6 @@
     <Resource Include="Images\bakery_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bread_bakery.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="bakery.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="bakery_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
