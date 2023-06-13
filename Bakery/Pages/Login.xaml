@@ -37,7 +37,7 @@
         <StackPanel Orientation="Vertical">
             <Image Source="../Images/bakery_logo.png" Width="120" Height="120"/>
 
-            <TextBlock Margin="0 50 0 5" Foreground="{StaticResource PrimaryTextColor}">Логин</TextBlock>
+            <TextBlock Margin="0 50 0 5" Foreground="{StaticResource QuinaryGrayColor}">Логин</TextBlock>
             <TextBox x:Name="LoginField" Style="{StaticResource defaultTextBox}">
                 <TextBox.Background>
                     <ImageBrush ImageSource="{icon:MaterialImage Kind=AccountOutline}" Stretch="None" AlignmentX="Left"/>
@@ -45,7 +45,7 @@
             </TextBox>
             <TextBlock x:Name="wrongLogin" Foreground="Red" FontSize="10" Margin="0 0 0 5" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <TextBlock Margin="0 0 0 5" Foreground="{StaticResource PrimaryTextColor}">Пароль</TextBlock>
+            <TextBlock Margin="0 0 0 5" Foreground="{StaticResource QuinaryGrayColor}">Пароль</TextBlock>
             <PasswordBox x:Name="Password"
                          BorderThickness="0, 0, 0, 1"
                          Height="25"

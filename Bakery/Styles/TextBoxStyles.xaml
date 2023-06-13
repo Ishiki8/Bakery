@@ -38,7 +38,7 @@
     <!--#region searchTextBox-->
     <Style x:Key="searchTextBox" TargetType="TextBox">
         <Setter Property="Background" Value="#ffffff" />
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Padding" Value="15 10" />
@@ -68,7 +68,7 @@
     
     <!--#region defaultTextBox-->
     <Style x:Key="defaultTextBox" TargetType="TextBox">
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
         <Setter Property="BorderThickness" Value="0, 0, 0, 1" />
         <Setter Property="Height" Value="25" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -84,10 +84,10 @@
                             <Setter Property="Opacity" TargetName="border" Value="0.56"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SecundaryAppColor}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource SecundaryAppColor}"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource PrimaryAppColor}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryAppColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

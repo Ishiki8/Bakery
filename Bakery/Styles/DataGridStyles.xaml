@@ -4,8 +4,8 @@
                     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <Style x:Key="gridEditButton" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource SecundaryBlueColor}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource SecundaryBlueColor}" />
+        <Setter Property="Background" Value="{StaticResource SecundaryBlueColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource SecundaryBlueColor}" />
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -20,7 +20,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
+                <Setter Property="Background" Value="{StaticResource PrimaryBlueColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -69,7 +69,7 @@
 
     <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#222528"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -140,7 +140,7 @@
 
     <Style x:Key="DataGridRowStyle1" TargetType="{x:Type DataGridRow}">
         <Setter Property="Margin" Value="0 4 0 0" />
-        <Setter Property="Background" Value="{DynamicResource TertiaryGrayColor}"/>
+        <Setter Property="Background" Value="{StaticResource TertiaryGrayColor}"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         <Setter Property="ValidationErrorTemplate">
@@ -186,7 +186,7 @@
                     <Condition Property="IsSelected" Value="true"/>
                     <Condition Property="Selector.IsSelectionActive" Value="false"/>
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource QuaternaryGrayColor}"/>
+                <Setter Property="Background" Value="{StaticResource QuaternaryGrayColor}"/>
             </MultiTrigger>
         </Style.Triggers>
     </Style>
@@ -223,7 +223,7 @@
     <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="#69717D" />
+        <Setter Property="Foreground" Value="{StaticResource QuinaryGrayColor}" />
         <Setter Property="Margin" Value="15 0 15 10" />
         <Setter Property="Template">
             <Setter.Value>

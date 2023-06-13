@@ -65,15 +65,14 @@ namespace bakery.Windows
 
             if (_userIsBaker)
             {
-                this.Title = "Просмотреть заказ";
                 orderEditText.Text = "Просмотр заказа";
                 editButton.Content = "Изменить статус";
 
                 dateView.IsEnabled = false;
                 customerView.IsEnabled = false;
-                arrivedStatus.Visibility = Visibility.Collapsed;
+                statusView.Items.Remove(arrivedStatus);
+                //arrivedStatus.Visibility = Visibility.Collapsed;
                 addProductButton.Visibility = Visibility.Collapsed;
-                productsContext.Visibility = Visibility.Collapsed;
                 buttonColumn.Visibility = Visibility.Collapsed;
             }
         }

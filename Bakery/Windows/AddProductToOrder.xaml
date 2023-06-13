@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Добавить продукцию в заказ" Height="300" Width="320"
+        Height="330" Width="330"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
@@ -17,10 +18,10 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Добавление продукции в заказ</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 20 0 40" FontSize="20" FontWeight="SemiBold">Добавление продукции в заказ</TextBlock>
 
-            <TextBlock Text="Продукция" Margin="10 0 0 5"></TextBlock>
-            <ComboBox Name="productView" Margin="10 0" SelectedValuePath="Id">
+            <TextBlock Text="Продукция" Margin="10 0 10 5" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
+            <ComboBox Name="productView" Style="{StaticResource ComboBoxStyle1}" ItemContainerStyle="{StaticResource ComboBoxItemStyle1}" Margin="10 0" SelectedValuePath="Id">
                 <ComboBox.ItemTemplate>
                     <DataTemplate >
                         <TextBlock Text="{Binding Path=Title}"/>
@@ -29,15 +30,27 @@
             </ComboBox>
             <TextBlock x:Name="wrongProduct" Margin="10 0 0 5" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <TextBlock Text="Количество" Margin="10 0 0 5"></TextBlock>
-            <TextBox x:Name="quantityView" Margin="10 0"
-                     Style="{StaticResource placeHolder}" Tag="Введите число"
+            <TextBlock Text="Количество" Margin="10 0 10 5" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
+
+            <Grid Margin="10 0">
+                <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Введите число"
+                           Visibility="{Binding ElementName=quantityView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                <TextBox x:Name="quantityView" Padding="0"
+                     Style="{StaticResource defaultTextBox}"
                      ToolTip="Должно быть целым числом"></TextBox>
+            </Grid>
+
             <TextBlock x:Name="wrongQuantity" Margin="10 0" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
             
         </StackPanel>
         <DockPanel Grid.Row="1">
-            <Button Margin="10" Height="30" Width="225" HorizontalContentAlignment="Center" Click="AddButton_Click">Добавить</Button>
+            <Button Style="{StaticResource defaultButton}" HorizontalAlignment="Center" Width="110" Margin="0" Click="AddButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                    <TextBlock Text="Добавить"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
     </Grid>
 </Window>

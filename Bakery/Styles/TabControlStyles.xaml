@@ -69,7 +69,7 @@
                             <TextBlock x:Name="txtContent"
                                                Grid.Column="1"
                                                Margin="10 0 0 0"
-                                               Foreground="{DynamicResource SecundaryTextColor}"
+                                               Foreground="{StaticResource SecundaryTextColor}"
                                                Width="150"
                                                Padding="0 10.5"
                                                VerticalAlignment="Center"
@@ -88,14 +88,14 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="sBorder" Property="Background" Value="{DynamicResource TertiaryGrayColor}"/>
-                            <Setter TargetName="iBorder" Property="Background" Value="{DynamicResource PrimaryBlueColor}"/>
-                            <Setter TargetName="txtContent" Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+                            <Setter TargetName="sBorder" Property="Background" Value="{StaticResource TertiaryGrayColor}"/>
+                            <Setter TargetName="iBorder" Property="Background" Value="{StaticResource PrimaryBlueColor}"/>
+                            <Setter TargetName="txtContent" Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="sBorder" Property="Background" Value="{DynamicResource SecundaryGrayColor}"/>
-                            <Setter TargetName="iBorder" Property="Background" Value="{DynamicResource SecundaryBlueColor}"/>
-                            <Setter TargetName="txtContent" Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
+                            <Setter TargetName="sBorder" Property="Background" Value="{StaticResource SecundaryGrayColor}"/>
+                            <Setter TargetName="iBorder" Property="Background" Value="{StaticResource SecundaryBlueColor}"/>
+                            <Setter TargetName="txtContent" Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -105,7 +105,7 @@
 
     <Style x:Key="menuButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource SecundaryTextColor}" />
+        <Setter Property="Foreground" Value="{StaticResource SecundaryTextColor}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Height" Value="40" />
 
@@ -122,8 +122,8 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource TertiaryGrayColor}" />
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}" />
+                <Setter Property="Background" Value="{StaticResource TertiaryGrayColor}" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -136,8 +136,8 @@
     </Style>
 
     <Style x:Key="defaultButton" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource PrimaryAppColor}" />
-        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Background" Value="{StaticResource PrimaryAppColor}" />
+        <Setter Property="Foreground" Value="{StaticResource SecundaryTextColor}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Height" Value="35" />
         <Setter Property="Width" Value="190" />
@@ -157,8 +157,8 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource SecundaryAppColor}" />
-                <Setter Property="Foreground" Value="#ffffff" />
+                <Setter Property="Background" Value="{StaticResource SecundaryAppColor}" />
+                <!--<Setter Property="Foreground" Value="{StaticResource SecundaryTextColor}" />-->
             </Trigger>
         </Style.Triggers>
     </Style>

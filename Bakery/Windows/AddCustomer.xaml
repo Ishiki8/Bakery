@@ -18,9 +18,9 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Margin="0 20 20 40" FontSize="20">Добавление заказчика</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 20 0 40" FontSize="20" FontWeight="SemiBold">Добавление заказчика</TextBlock>
 
-            <TextBlock Text="Наименование" Margin="10 0 10 5"></TextBlock>
+            <TextBlock Text="Наименование" Margin="10 0 10 5" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
 
             <Grid Margin="10 0">
                 <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -33,7 +33,7 @@
             
             <TextBlock x:Name="wrongName" Margin="10 0 10 10" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
-            <TextBlock Text="Адрес" Margin="10 0 10 5"></TextBlock>
+            <TextBlock Text="Адрес" Margin="10 0 10 5" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
 
             <Grid Margin="10 0">
                 <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -48,7 +48,7 @@
 
             <Grid Margin="10 0">
                 <StackPanel HorizontalAlignment="Left">
-                    <TextBlock Text="ИНН"></TextBlock>
+                    <TextBlock Text="ИНН" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
 
                     <Grid>
                         <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
@@ -63,7 +63,7 @@
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
-                    <TextBlock Text="Номер телефона"></TextBlock>
+                    <TextBlock Text="Номер телефона" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
 
                     <Grid>
                         <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"

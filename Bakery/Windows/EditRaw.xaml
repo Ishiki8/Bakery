@@ -3,49 +3,78 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:bakery.Windows"
         mc:Ignorable="d"
-        Title="Редактировать сырье" Height="350" Width="350"
+        Height="370" Width="350"
         ResizeMode="NoResize"
         FontSize="14">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Margin="0 20" FontSize="20">Редактирование сырья</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 20 0 40" FontSize="20" FontWeight="SemiBold">Редактирование сырья</TextBlock>
 
-            <TextBlock Text="Название" Margin="10 0 0 5"></TextBlock>
-            <TextBox x:Name="titleView" Margin="10 0"
-                     Style="{StaticResource placeHolder}" Tag="До 50 символов"
+            <TextBlock Text="Название" Margin="10 0 10 5" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
+
+            <Grid Margin="10 0">
+                <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="До 50 символов"
+                           Visibility="{Binding ElementName=titleView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                <TextBox x:Name="titleView" Padding="0"
+                     Style="{StaticResource defaultTextBox}"
                      ToolTip="Должно быть уникально"></TextBox>
+            </Grid>
+
             <TextBlock x:Name="wrongTitle" Foreground="Red" Margin="10 0" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
 
             <Grid Margin="10">
                 <StackPanel HorizontalAlignment="Left">
-                    <TextBlock Text="Вес, кг"></TextBlock>
-                    <TextBox x:Name="weightView" Margin="0 5 0 0" Width="150"
-                             Style="{StaticResource placeHolder}" Tag="От 0.01 до 99.99"
+                    <TextBlock Text="Вес, кг" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
+
+                    <Grid>
+                        <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="От 0.01 до 99.99"
+                           Visibility="{Binding ElementName=weightView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                        <TextBox x:Name="weightView" Margin="0 5 0 0" Padding="0" Width="150"
+                             Style="{StaticResource defaultTextBox}"
                              ToolTip="Может быть указан целым числом"></TextBox>
+                    </Grid>
+
                     <TextBlock x:Name="wrongWeight" Foreground="Red" Width="150" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right">
-                    <TextBlock Text="Цена"></TextBlock>
-                    <TextBox x:Name="priceView" Margin="0 5 0 0" Width="150"
-                             Style="{StaticResource placeHolder}" Tag="От 0.01 до 99999.99"
+                    <TextBlock Text="Цена" Foreground="{StaticResource QuinaryGrayColor}"></TextBlock>
+
+                    <Grid>
+                        <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="От 0.01 до 99999.99"
+                           Visibility="{Binding ElementName=priceView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                        <TextBox x:Name="priceView" Margin="0 5 0 0" Padding="0" Width="150"
+                             Style="{StaticResource defaultTextBox}"
                              ToolTip="Может быть указана целым числом"></TextBox>
+                    </Grid>
+
                     <TextBlock x:Name="wrongPrice" Foreground="Red" Width="150" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
             </Grid>
-            <CheckBox x:Name="inStockView" Content="На складе" Margin="10 5 0 0" IsThreeState="True" IsChecked="{x:Null}"></CheckBox>
+            <CheckBox x:Name="inStockView" Margin="10 5 0 0" IsThreeState="True" IsChecked="{x:Null}" ToolTip="Пусто - нет, квадратик - неизвестно, галочка - есть">
+                <TextBlock Foreground="{StaticResource QuinaryGrayColor}">На складе</TextBlock>
+            </CheckBox>
         </StackPanel>
         <DockPanel Grid.Row="1">
-            <Button Margin="10" Height="30" Width="225" HorizontalContentAlignment="Center" Click="EditButton_Click">Изменить</Button>
+            <Button Style="{StaticResource defaultButton}" HorizontalAlignment="Center" Width="110" Margin="0" Click="EditButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="Pencil" VerticalAlignment="Center" Width="10" Height="10" Margin="0 2 8 0"/>
+                    <TextBlock Text="Изменить"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
     </Grid>
 </Window>

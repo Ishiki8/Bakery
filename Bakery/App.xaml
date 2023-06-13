@@ -19,6 +19,7 @@
                     <SolidColorBrush x:Key="SecundaryGrayColor" Color="#FFFFFF"/>
                     <SolidColorBrush x:Key="TertiaryGrayColor" Color="#EAEAEA"/>
                     <SolidColorBrush x:Key="QuaternaryGrayColor" Color="#D3D3D3"/>
+                    <SolidColorBrush x:Key="QuinaryGrayColor" Color="#69717D"/>
 
                     <SolidColorBrush x:Key="BorderBrush" Color="#FFFFFF"/>
 
@@ -28,10 +29,11 @@
                     <SolidColorBrush x:Key="PrimaryBlueColor" Color="#14BDE3"/>
                     <SolidColorBrush x:Key="SecundaryBlueColor" Color="#1467E3"/>
                 </ResourceDictionary>
-                
+
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TabControlStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/DataGridStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
