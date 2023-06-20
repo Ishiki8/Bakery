@@ -26,16 +26,8 @@ namespace bakery.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            try
-            {
-                optionsBuilder.UseNpgsql(
+            optionsBuilder.UseNpgsql(
                     "Host=localhost;Username=postgres;Password=root;Database=Bakery_Database");
-            }
-            catch
-            {
-                MessageBox.Show("База данных не найдена. Обратитесь к системному администратору.");
-                Environment.Exit(0);
-            }
             
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
