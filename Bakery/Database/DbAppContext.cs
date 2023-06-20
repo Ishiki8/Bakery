@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace bakery.Database
 {
@@ -25,8 +26,17 @@ namespace bakery.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(
-                "Host=localhost;Username=postgres;Password=root;Database=Bakery_Database");
+            try
+            {
+                optionsBuilder.UseNpgsql(
+                    "Host=localhost;Username=postgres;Password=root;Database=Bakery_Database");
+            }
+            catch
+            {
+                MessageBox.Show("База данных не найдена. Обратитесь к системному администратору.");
+                Environment.Exit(0);
+            }
+            
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

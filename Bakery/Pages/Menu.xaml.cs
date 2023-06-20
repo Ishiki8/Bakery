@@ -330,6 +330,16 @@ namespace bakery
             
             if (user != null)
             {
+                if (DatabaseControl.GetUsersForView().Count() == 1)
+                {
+                    if (MessageBox.Show("Вы удаляете последнего пользователя. Подтверждаете удаление?",
+                        "Подтверждение удаления",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                } 
                 DatabaseControl.RemoveUser(user);
                 RefreshUsersTable();  
             }

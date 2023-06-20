@@ -12,28 +12,6 @@
       Title="Login">
 
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="0.2*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.2*"></RowDefinition>
-        </Grid.RowDefinitions>-->
-
-        <!--<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">Авторизация</TextBlock>-->
-
-        <!--<StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="10">
-
-            <TextBlock Margin="0 0 0 5">Логин</TextBlock>
-            <TextBox x:Name="LoginField"></TextBox>
-            <TextBlock x:Name="wrongLogin" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
- 
-            <TextBlock Margin="0 0 0 5">Пароль</TextBlock>
-            <PasswordBox x:Name="Password"></PasswordBox>
-            <TextBlock x:Name="wrongPassword" Foreground="Red" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
-
-            <TextBlock x:Name="wrongLoginOrPassword" Foreground="Red" Margin="0 10 0 0" HorizontalAlignment="Center" ></TextBlock>
-        </StackPanel>-->
-        <!--<Button Grid.Row="2" MaxWidth="100" MaxHeight="50" MinWidth="75" MinHeight="40" Click="Login_Click" IsDefault="True">Войти</Button>-->
-
         <StackPanel Orientation="Vertical">
             <Image Source="../Images/bakery_logo.png" Width="120" Height="120"/>
 
