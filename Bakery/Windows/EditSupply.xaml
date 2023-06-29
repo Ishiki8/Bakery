@@ -31,7 +31,7 @@
                            Visibility="{Binding ElementName=dateView, Path=Text.IsEmpty, Converter={StaticResource BoolToVisibility}}" />
                         <TextBox x:Name="dateView" Margin="0 5 0 0" Padding="0" Width="90"
                              Style="{StaticResource defaultTextBox}"
-                             ToolTip="Допустимы форматы дд.мм.гггг, дд/мм/гггг. Дата заказа не может превышать текущую"></TextBox>
+                             ToolTip="Допустимы форматы дд.мм.гггг, дд/мм/гггг. Дата поставки не может превышать текущую"></TextBox>
                     </Grid>
 
                     <TextBlock x:Name="wrongDate" Foreground="Red" Width="90" FontSize="10" TextWrapping="WrapWithOverflow"></TextBlock>
